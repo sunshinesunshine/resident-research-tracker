@@ -299,6 +299,154 @@ function resetSystemToDefault(pin) {
   }
 }
 
+/**
+ * =========================================================================
+ * BACKUP & SNAPSHOT SUITE (DUAL-LAYER CLOUD BACKUP)
+ * =========================================================================
+ */
+
+/**
+ * สร้างจุดสำรองข้อมูลบน Google Sheet (Cloud Sheet Snapshot)
+ */
+function createSpreadsheetSnapshot() {
+  try {
+    const ss = getSpreadsheet();
+    const resSheet = ss.getSheetByName(SHEET_NAMES.RESIDENTS);
+    if (!resSheet) throw new Error('Sheet Residents ไม่พบในระบบ');
+
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    const timeStr = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+    const snapshotName = `Backup_${timeStr}`;
+
+    // ถ้ามีชื่อซ้ำ ให้ลบก่อน
+    const existing = ss.getSheetByName(snapshotName);
+    if (existing) {
+      ss.deleteSheet(existing);
+    }
+
+    const newSheet = resSheet.copyTo(ss);
+    newSheet.setName(snapshotName);
+    newSheet.setTabColor('#059669'); // Emerald green tab
+
+    // รักษาจำนวน snapshot ไม่ให้เกิน 10 แผ่นล่าสุด
+    pruneOldSnapshots(ss, 10);
+
+    return {
+      success: true,
+      snapshotName: snapshotName,
+      timestamp: now.toLocaleString('th-TH')
+    };
+  } catch (err) {
+    Logger.log('createSpreadsheetSnapshot error: ' + err.toString());
+    return { success: false, error: err.toString() };
+  }
+}
+
+/**
+ * ลบ snapshot เก่าเพื่อไม่ให้ชีตรกเกินไป
+ */
+function pruneOldSnapshots(ss, maxKeep) {
+  try {
+    const sheets = ss.getSheets();
+    const backupSheets = sheets.filter(s => s.getName().startsWith('Backup_'));
+    if (backupSheets.length > maxKeep) {
+      backupSheets.sort((a, b) => a.getName().localeCompare(b.getName()));
+      const toDeleteCount = backupSheets.length - maxKeep;
+      for (let i = 0; i < toDeleteCount; i++) {
+        ss.deleteSheet(backupSheets[i]);
+      }
+    }
+  } catch (e) {
+    Logger.log('pruneOldSnapshots error: ' + e);
+  }
+}
+
+/**
+ * ดึงรายชื่อ Snapshot ทั้งหมดใน Google Sheet
+ */
+function listSpreadsheetSnapshots() {
+  try {
+    const ss = getSpreadsheet();
+    const sheets = ss.getSheets();
+    const backups = sheets
+      .filter(s => s.getName().startsWith('Backup_'))
+      .map(s => s.getName())
+      .sort()
+      .reverse();
+    return { success: true, snapshots: backups };
+  } catch (err) {
+    return { success: false, error: err.toString() };
+  }
+}
+
+/**
+ * ซิงก์ข้อมูลกู้คืนทั้งหมด (Full Batch Sync) ขึ้น Google Sheets
+ */
+function syncAllDataToCloud(fullData) {
+  try {
+    if (!fullData) throw new Error('No data provided to sync');
+    const ss = getSpreadsheet();
+
+    // 1. Snapshot ข้อมูลปัจจุบันก่อนเขียนทับเสมอ (Safety First!)
+    createSpreadsheetSnapshot();
+
+    // 2. ซิงก์ Residents
+    if (Array.isArray(fullData.residents)) {
+      let resSheet = ss.getSheetByName(SHEET_NAMES.RESIDENTS);
+      if (!resSheet) {
+        resSheet = ss.insertSheet(SHEET_NAMES.RESIDENTS);
+      }
+      resSheet.clearContents();
+      const headers = [
+        'id', 'name', 'nickname', 'batchYear', 'subspecialty', 'title', 'studyDesign',
+        'advisor', 'coAdvisor', 'targetN', 'irbStatus', 'funding', 'driveLink', 'notes',
+        'stage1_done', 'stage2_done', 'stage3_done', 'stage4_done', 'stage5_done', 'stage6_done',
+        'isAlumni', 'lastUpdated'
+      ];
+      const rows = [headers];
+      fullData.residents.forEach(r => {
+        rows.push(serializeResidentRow(headers, r));
+      });
+      resSheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+      formatHeaderRow(resSheet);
+    }
+
+    // 3. ซิงก์ Advisors
+    if (Array.isArray(fullData.staff) && fullData.staff.length > 0) {
+      saveAdvisors(fullData.staff);
+    }
+
+    // 4. ซิงก์ Forums
+    if (Array.isArray(fullData.forums) && fullData.forums.length > 0) {
+      saveForums(fullData.forums);
+    }
+
+    // 5. ซิงก์ Curriculum
+    if (Array.isArray(fullData.curriculumTemplate) && fullData.curriculumTemplate.length > 0) {
+      saveCurriculumTemplate(fullData.curriculumTemplate);
+    }
+
+    // 6. ซิงก์ App Config
+    if (fullData.academicYearConfig) {
+      saveAppConfig({
+        autoAcademicYear: fullData.academicYearConfig.autoAcademicYear,
+        currentYear: fullData.academicYearConfig.currentYear,
+        dashboardSectionOrder: fullData.dashboardSectionOrder,
+        adminPin: fullData.adminPin || DEFAULT_PIN
+      });
+    }
+
+    return {
+      success: true,
+      residentCount: (fullData.residents || []).length
+    };
+  } catch (err) {
+    Logger.log('syncAllDataToCloud error: ' + err.toString());
+    return { success: false, error: err.toString() };
+  }
+}
+
 // =========================================================================
 // HELPER SERIALIZERS & SHEET READERS
 // =========================================================================

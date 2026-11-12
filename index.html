@@ -1001,6 +1001,7 @@
                 <option value="R1">ชั้นปีที่ 1 (R1)</option>
                 <option value="R2">ชั้นปีที่ 2 (R2)</option>
                 <option value="R3">ชั้นปีที่ 3 (R3)</option>
+                <option value="Alumni">ศิษย์เก่า (Alumni)</option>
               </select>
             </div>
             <div>
@@ -1298,19 +1299,86 @@
           <h2 class="text-xl font-heading font-bold text-navy-900">ตั้งค่าระบบ</h2>
           <p class="text-xs text-slate-500 mt-0.5">จัดการปีการศึกษา, กรอบเวลาหลักสูตร, รอบ Forum และสำรองข้อมูล</p>
         </div>
-        <div class="flex items-center gap-2">
-          <button onclick="exportJSONBackup()" class="px-3.5 py-2 bg-navy-800 hover:bg-navy-900 text-white rounded-lg text-xs font-heading font-medium flex items-center gap-1.5 shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            Export JSON
-          </button>
-          <label class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-heading font-medium cursor-pointer flex items-center gap-1.5 border border-slate-300">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-            Import JSON
-            <input type="file" id="importJsonFileInput" accept=".json" onchange="importJSONBackup(event)" class="hidden">
-          </label>
-          <button onclick="exportCSV()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-heading font-medium flex items-center gap-1.5 shadow-sm">
-            Export CSV
-          </button>
+      <!-- DUAL-LAYER CLOUD & LOCAL BACKUP CENTER -->
+      <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+          <div>
+            <h3 class="font-heading font-bold text-navy-900 text-sm sm:text-base flex items-center gap-2">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+              <span>ศูนย์สำรองและกู้คืนข้อมูล (Dual-Layer Backup Center)</span>
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">ระบบสำรองข้อมูล 2 ชั้น: บันทึกจุดสำรองบน Google Sheet (Cloud Snapshot) และดาวน์โหลดไฟล์ JSON/CSV เก็บไว้ในเครื่อง</p>
+          </div>
+          <span class="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 self-start sm:self-auto flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Dual-Layer Active
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- CARD 1: Google Sheet Snapshot -->
+          <div class="p-4 rounded-xl border border-emerald-100 bg-emerald-50/30 flex flex-col justify-between space-y-3">
+            <div>
+              <div class="flex items-center gap-2 text-emerald-900 font-heading font-bold text-xs sm:text-sm">
+                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                <span>1. Cloud Sheet Snapshot</span>
+              </div>
+              <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">คัดลอกชีตเป็นแท็บสำรองใน Google Spreadsheet อัตโนมัติ (เช่น Backup_25691112) เก็บไว้ได้สูงสุด 10 รุ่นล่าสุด</p>
+            </div>
+            <button id="btnCloudSnapshot" onclick="createCloudSheetSnapshot()" class="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-heading font-semibold text-xs rounded-lg shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span>สร้างจุดสำรองบน Sheet ทันที</span>
+            </button>
+          </div>
+
+          <!-- CARD 2: Offline JSON / CSV -->
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between space-y-3">
+            <div>
+              <div class="flex items-center gap-2 text-navy-900 font-heading font-bold text-xs sm:text-sm">
+                <svg class="w-4 h-4 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span>2. ดาวน์โหลดไฟล์สำรอง (Offline)</span>
+              </div>
+              <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">ดาวน์โหลดฐานข้อมูลทั้งหมด (Resident, ที่ปรึกษา, กรอบหลักสูตร, Forum) เก็บไว้ในเครื่องคอมพิวเตอร์อย่างปลอดภัย</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="exportJSONBackup()" class="flex-1 py-2 px-2 bg-navy-800 hover:bg-navy-900 text-white font-heading font-semibold text-xs rounded-lg shadow-sm transition flex items-center justify-center gap-1 cursor-pointer">
+                <span>ดาวน์โหลด JSON</span>
+              </button>
+              <button onclick="exportCSV()" class="flex-1 py-2 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-heading font-semibold text-xs rounded-lg transition flex items-center justify-center gap-1 cursor-pointer">
+                <span>รายงาน CSV</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 3: Restore / Import -->
+          <div class="p-4 rounded-xl border border-amber-200/80 bg-amber-50/30 flex flex-col justify-between space-y-3">
+            <div>
+              <div class="flex items-center gap-2 text-amber-950 font-heading font-bold text-xs sm:text-sm">
+                <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                <span>3. กู้คืนข้อมูล (Restore)</span>
+              </div>
+              <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">นำเข้าไฟล์ JSON สำรอง พร้อมระบบตรวจสอบความถูกต้อง และตัวเลือกซิงก์ข้อมูลกลับขึ้น Google Sheet อัตโนมัติ</p>
+            </div>
+            <label class="w-full py-2 px-3 bg-amber-600 hover:bg-amber-700 text-white font-heading font-semibold text-xs rounded-lg shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer text-center">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+              <span>เลือกไฟล์ JSON เพื่อกู้คืน</span>
+              <input type="file" id="importJsonFileInput" accept=".json" onchange="importJSONBackup(event)" class="hidden">
+            </label>
+          </div>
+        </div>
+
+        <!-- Snapshot History Section -->
+        <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-slate-700">ประวัติแท็บ Snapshot บน Google Sheet:</span>
+            <button onclick="fetchSpreadsheetSnapshots()" class="text-xs text-emerald-700 hover:underline font-medium cursor-pointer flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+              <span>รีเฟรช</span>
+            </button>
+          </div>
+          <ul id="snapshotHistoryList" class="flex items-center gap-2 flex-wrap">
+            <li class="text-[11px] text-slate-400 italic">กดรีเฟรชเพื่อโหลดประวัติจาก Sheet...</li>
+          </ul>
         </div>
       </div>
 
@@ -2007,8 +2075,68 @@
       if (!IS_GAS) return;
       updateGasSyncStatus("syncing", "กำลังลบข้อมูลใน Sheet...");
       google.script.run
-        .withSuccessHandler(() => updateGasSyncStatus("online", "ลบข้อมูลใน Sheet แล้ว"))
+        .withSuccessHandler((res) => {
+          if (res && res.success) {
+            updateGasSyncStatus("online", "ลบข้อมูลใน Sheet แล้ว");
+          } else {
+            updateGasSyncStatus("error", "ลบข้อมูลใน Sheet ไม่สำเร็จ");
+          }
+        })
+        .withFailureHandler((err) => {
+          console.error("GAS deleteResident error:", err);
+          updateGasSyncStatus("error", "เชื่อมต่อ Sheet ขัดข้อง");
+        })
         .deleteResident(resId);
+    }
+
+    function createCloudSheetSnapshot() {
+      if (!IS_GAS) {
+        alert("ฟังก์ชัน Snapshot บน Google Sheet ทำงานเมื่อรันบน Google Apps Script ครับ ระบบจะทำการดาวน์โหลดไฟล์ JSON สำรองให้แทน");
+        exportJSONBackup();
+        return;
+      }
+      updateGasSyncStatus("syncing", "กำลังสร้างจุดสำรองบน Google Sheet...");
+      const btn = document.getElementById("btnCloudSnapshot");
+      if (btn) btn.disabled = true;
+
+      google.script.run
+        .withSuccessHandler((res) => {
+          if (btn) btn.disabled = false;
+          if (res && res.success) {
+            updateGasSyncStatus("online", "สร้างจุดสำรองบน Sheet สำเร็จ");
+            alert(`✅ สร้างจุดสำรองบน Google Sheet สำเร็จแล้ว!\nชื่อแท็บ: ${res.snapshotName}\nเวลา: ${res.timestamp}`);
+            fetchSpreadsheetSnapshots();
+          } else {
+            updateGasSyncStatus("error", "สร้างจุดสำรองล้มเหลว");
+            alert("❌ ไม่สามารถสร้างจุดสำรองได้: " + (res && res.error));
+          }
+        })
+        .withFailureHandler((err) => {
+          if (btn) btn.disabled = false;
+          updateGasSyncStatus("error", "เชื่อมต่อ Sheet ขัดข้อง");
+          alert("❌ ไม่สามารถเชื่อมต่อกับ Google Sheet ได้: " + err);
+        })
+        .createSpreadsheetSnapshot();
+    }
+
+    function fetchSpreadsheetSnapshots() {
+      if (!IS_GAS) return;
+      google.script.run
+        .withSuccessHandler((res) => {
+          const listEl = document.getElementById("snapshotHistoryList");
+          if (!listEl) return;
+          if (res && res.success && res.snapshots && res.snapshots.length > 0) {
+            listEl.innerHTML = res.snapshots.map(s => `
+              <li class="flex items-center gap-1.5 text-[11px] py-1 px-2.5 bg-emerald-50 text-emerald-900 rounded-lg border border-emerald-200 font-mono font-medium">
+                <svg class="w-3 h-3 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>${s}</span>
+              </li>
+            `).join("");
+          } else {
+            listEl.innerHTML = `<li class="text-[11px] text-slate-400 italic">ยังไม่มีประวัติจุดสำรองบน Sheet</li>`;
+          }
+        })
+        .listSpreadsheetSnapshots();
     }
 
     function syncCurriculumToCloud(template) {
@@ -4844,7 +4972,7 @@ function initData() {
       const tier = getResidentCohortTier(res);
       switchTab('resident');
       setPortalMode('update');
-      document.getElementById("portalCohortSelect").value = (tier === "Alumni" ? "R3" : tier);
+      document.getElementById("portalCohortSelect").value = tier;
       populatePortalResidentDropdown();
       document.getElementById("portalResidentSelect").value = res.id;
       loadPortalResidentData();
@@ -4883,6 +5011,9 @@ function initData() {
 
       renderCurriculumTemplateConfig();
       updateForumCountdown();
+      if (typeof fetchSpreadsheetSnapshots === "function") {
+        fetchSpreadsheetSnapshots();
+      }
     }
 
     function renderCurriculumTemplateConfig() {
@@ -5091,20 +5222,49 @@ function initData() {
         try {
           const imported = JSON.parse(e.target.result);
           if (imported.residents && imported.staff) {
+            const count = imported.residents.length;
+            const staffCount = imported.staff.length;
+            
+            const doSyncCloud = confirm(
+              `พบข้อมูลในไฟล์สำรอง:\n• แพทย์ประจำบ้าน ${count} รายการ\n• อาจารย์ที่ปรึกษา ${staffCount} ท่าน\n\nกด [ตกลง / OK] เพื่อกู้คืนและซิงก์ข้อมูลกลับขึ้น Google Sheet ทันที\nกด [ยกเลิก / Cancel] เพื่อกู้คืนเฉพาะบนเบราว์เซอร์นี้ (ไม่แตะต้อง Google Sheet)`
+            );
+
             appData = imported;
             saveData();
-            alert("กู้คืนข้อมูลจากไฟล์ JSON สำเร็จแล้ว!");
             refreshAcademicYear();
             renderDashboard();
             renderSettings();
+
+            if (doSyncCloud && IS_GAS) {
+              updateGasSyncStatus("syncing", "กำลังซิงก์ข้อมูลกู้คืนขึ้น Sheet...");
+              google.script.run
+                .withSuccessHandler((res) => {
+                  if (res && res.success) {
+                    updateGasSyncStatus("online", "กู้คืนและซิงก์ Sheet เรียบร้อย");
+                    alert(`✅ กู้คืนข้อมูลสำเร็จ และซิงก์ขึ้น Google Sheet เรียบร้อยแล้ว (${count} รายการ)`);
+                    fetchSpreadsheetSnapshots();
+                  } else {
+                    updateGasSyncStatus("error", "ซิงก์ขึ้น Sheet ไม่สำเร็จ");
+                    alert("กู้คืนในระบบแล้ว แต่ไม่สามารถซิงก์ขึ้น Google Sheet: " + (res && res.error));
+                  }
+                })
+                .withFailureHandler((err) => {
+                  updateGasSyncStatus("error", "เชื่อมต่อ Sheet ขัดข้อง");
+                  alert("กู้คืนในระบบแล้ว แต่เชื่อมต่อ Google Sheet ล้มเหลว: " + err);
+                })
+                .syncAllDataToCloud(imported);
+            } else {
+              alert(`กู้คืนข้อมูลเฉพาะเครื่องนี้สำเร็จแล้ว (${count} รายการ)`);
+            }
           } else {
-            alert("รูปแบบไฟล์ JSON ไม่ถูกต้อง");
+            alert("รูปแบบไฟล์ JSON ไม่ถูกต้อง (ต้องประกอบด้วย residents และ staff)");
           }
         } catch (err) {
           alert("ไม่สามารถอ่านไฟล์ JSON ได้: " + err.message);
         }
       };
       reader.readAsText(file);
+      event.target.value = "";
     }
 
     function exportCSV() {
