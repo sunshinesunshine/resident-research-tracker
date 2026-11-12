@@ -416,14 +416,17 @@ function getResidentsData(ss) {
       row[headers.indexOf('stage6_done')] === true
     ];
 
+    const designVal = String(row[headers.indexOf('studyDesign')] || 'Prospective Cohort Study');
+
     list.push({
       id: String(id),
       name: String(name),
       nickname: String(row[headers.indexOf('nickname')] || ''),
       batchYear: parseInt(row[headers.indexOf('batchYear')], 10) || 2569,
-      subspecialty: String(row[headers.indexOf('subspecialty')] || ''),
+      subspecialty: String(row[headers.indexOf('subspecialty')] || 'Glaucoma'),
       title: String(row[headers.indexOf('title')] || ''),
-      studyDesign: String(row[headers.indexOf('studyDesign')] || ''),
+      studyDesign: designVal,
+      design: designVal,
       advisor: String(row[headers.indexOf('advisor')] || ''),
       coAdvisor: String(row[headers.indexOf('coAdvisor')] || ''),
       targetN: String(row[headers.indexOf('targetN')] || ''),
@@ -432,6 +435,7 @@ function getResidentsData(ss) {
       driveLink: String(row[headers.indexOf('driveLink')] || ''),
       notes: String(row[headers.indexOf('notes')] || ''),
       milestones: milestones,
+      checks: milestones,
       isAlumni: row[headers.indexOf('isAlumni')] === true,
       lastUpdated: String(row[headers.indexOf('lastUpdated')] || '')
     });
@@ -440,7 +444,7 @@ function getResidentsData(ss) {
 }
 
 function serializeResidentRow(headers, r) {
-  const ms = r.milestones || [false, false, false, false, false, false];
+  const ms = r.checks || r.milestones || [false, false, false, false, false, false];
   const map = {
     id: r.id,
     name: r.name,
@@ -448,7 +452,7 @@ function serializeResidentRow(headers, r) {
     batchYear: r.batchYear || 2569,
     subspecialty: r.subspecialty || '',
     title: r.title || '',
-    studyDesign: r.studyDesign || '',
+    studyDesign: r.studyDesign || r.design || '',
     advisor: r.advisor || '',
     coAdvisor: r.coAdvisor || '',
     targetN: r.targetN || '',
