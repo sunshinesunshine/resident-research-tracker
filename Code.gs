@@ -417,6 +417,16 @@ function getResidentsData(ss) {
     ];
 
     const designVal = String(row[headers.indexOf('studyDesign')] || 'Prospective Cohort Study');
+    const adv = String(row[headers.indexOf('advisor')] || '');
+    const coAdv = String(row[headers.indexOf('coAdvisor')] || '');
+    const advList = [];
+    if (adv) advList.push(adv);
+    if (coAdv && coAdv !== '-') {
+      coAdv.split(',').forEach(a => {
+        const trimmed = a.trim();
+        if (trimmed && trimmed !== '-') advList.push(trimmed);
+      });
+    }
 
     list.push({
       id: String(id),
@@ -427,8 +437,9 @@ function getResidentsData(ss) {
       title: String(row[headers.indexOf('title')] || ''),
       studyDesign: designVal,
       design: designVal,
-      advisor: String(row[headers.indexOf('advisor')] || ''),
-      coAdvisor: String(row[headers.indexOf('coAdvisor')] || ''),
+      advisor: adv,
+      coAdvisor: coAdv,
+      advisors: advList.length > 0 ? advList : (adv ? [adv] : []),
       targetN: String(row[headers.indexOf('targetN')] || ''),
       irbStatus: String(row[headers.indexOf('irbStatus')] || ''),
       funding: String(row[headers.indexOf('funding')] || ''),
@@ -445,6 +456,18 @@ function getResidentsData(ss) {
 
 function serializeResidentRow(headers, r) {
   const ms = r.checks || r.milestones || [false, false, false, false, false, false];
+  
+  let primaryAdv = r.advisor || '';
+  let coAdv = r.coAdvisor || '';
+  if (Array.isArray(r.advisors) && r.advisors.length > 0) {
+    primaryAdv = r.advisors[0] || '';
+    if (r.advisors.length > 1) {
+      coAdv = r.advisors.slice(1).filter(Boolean).join(', ');
+    } else {
+      coAdv = '';
+    }
+  }
+
   const map = {
     id: r.id,
     name: r.name,
@@ -453,8 +476,8 @@ function serializeResidentRow(headers, r) {
     subspecialty: r.subspecialty || '',
     title: r.title || '',
     studyDesign: r.studyDesign || r.design || '',
-    advisor: r.advisor || '',
-    coAdvisor: r.coAdvisor || '',
+    advisor: primaryAdv,
+    coAdvisor: coAdv,
     targetN: r.targetN || '',
     irbStatus: r.irbStatus || '',
     funding: r.funding || '',

@@ -446,10 +446,6 @@
                 <input type="text" id="kanbanSearchInput" oninput="handleKanbanSearch(this.value)" placeholder="ค้นหาชื่อหรือหัวข้อ..." class="w-44 px-3 py-1 rounded-lg border border-slate-300 bg-white text-xs text-slate-700 focus:ring-2 focus:ring-navy-600 pl-7">
                 <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
               </div>
-              <button onclick="openResidentEditModal('R1')" class="px-3 py-1.5 bg-navy-700 hover:bg-navy-800 text-white rounded-lg text-xs font-heading font-medium flex items-center gap-1 shadow-xs transition cursor-pointer" title="เพิ่ม Resident ใหม่">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                <span>+ เพิ่ม Resident</span>
-              </button>
             </div>
           </div>
 
@@ -616,10 +612,6 @@
           </div>
           <p class="text-xs text-slate-500 mt-1" id="timeframe-summary-r1">เป้าหมาย: ทบทวนวรรณกรรม ถึง ยื่น IRB</p>
         </div>
-        <button onclick="openResidentEditModal('R1')" class="px-3.5 py-2 bg-navy-700 hover:bg-navy-800 text-white rounded-lg text-xs font-heading font-medium flex items-center gap-1.5 self-start md:self-auto shadow-xs transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          + เพิ่ม Resident
-        </button>
       </div>
 
       <!-- Cohort Timeline & Progression Hub (Unified with Dashboard) -->
@@ -727,10 +719,6 @@
           </div>
           <p class="text-xs text-slate-500 mt-1" id="timeframe-summary-r2">เป้าหมาย: ขอทุน, เก็บรวบรวมข้อมูล, วิเคราะห์สถิติ</p>
         </div>
-        <button onclick="openResidentEditModal('R2')" class="px-3.5 py-2 bg-navy-700 hover:bg-navy-800 text-white rounded-lg text-xs font-heading font-medium flex items-center gap-1.5 self-start md:self-auto shadow-xs transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          + เพิ่ม Resident
-        </button>
       </div>
 
       <!-- Cohort Timeline & Progression Hub (Unified with Dashboard) -->
@@ -838,10 +826,6 @@
           </div>
           <p class="text-xs text-slate-500 mt-1" id="timeframe-summary-r3">เป้าหมาย: วิเคราะห์สถิติ ถึง ทำเล่ม & เผยแพร่ผลงาน</p>
         </div>
-        <button onclick="openResidentEditModal('R3')" class="px-3.5 py-2 bg-navy-700 hover:bg-navy-800 text-white rounded-lg text-xs font-heading font-medium flex items-center gap-1.5 self-start md:self-auto shadow-xs transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          + เพิ่ม Resident
-        </button>
       </div>
 
       <!-- Cohort Timeline & Progression Hub (Unified with Dashboard) -->
@@ -972,7 +956,7 @@
       </div>
     </section>
 
-    <!-- TAB 6: RESIDENT SELF-UPDATE PORTAL -->
+    <!-- TAB 6: RESIDENT SELF-UPDATE & REGISTRATION PORTAL -->
     <section id="view-resident" class="hidden space-y-6 max-w-4xl mx-auto">
       <div class="bg-emerald-900 rounded-2xl p-6 text-white shadow-md">
         <div class="flex items-center space-x-3">
@@ -981,58 +965,252 @@
           </div>
           <div>
             <h2 class="text-xl sm:text-2xl font-heading font-bold text-white mt-1">
-              Resident อัปเดตงานวิจัย
+              Resident Research Portal
             </h2>
             <p class="text-xs text-teal-100/90 mt-0.5">
-              อัปเดตสถานะ แนบลิงก์ไดรฟ์ และบันทึกโน้ตส่งเข้า Dashboard ทันที
+              ศูนย์จัดการและอัปเดตความก้าวหน้างานวิจัยแพทย์ประจำบ้าน (ลงทะเบียนใหม่ / บันทึกผล)
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Resident Selector Card -->
-      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1.5">เลือกรุ่น / ชั้นปี</label>
-            <select id="portalCohortSelect" onchange="populatePortalResidentDropdown()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-sm font-medium">
-              <option value="R1">ชั้นปีที่ 1 (R1)</option>
-              <option value="R2">ชั้นปีที่ 2 (R2)</option>
-              <option value="R3">ชั้นปีที่ 3 (R3)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1.5">เลือกชื่อ Resident</label>
-            <select id="portalResidentSelect" onchange="loadPortalResidentData()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-sm font-medium">
-              <!-- Rendered via JS -->
-            </select>
+      <!-- Segmented Mode Control: Update Existing vs Register New -->
+      <div class="flex items-center justify-center">
+        <div class="inline-flex rounded-xl bg-slate-200/80 p-1 shadow-inner gap-1">
+          <button type="button" id="btnPortalModeUpdate" onclick="setPortalMode('update')" class="px-5 py-2 rounded-lg font-heading text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-white text-navy-900 shadow-xs cursor-pointer">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            <span>อัปเดตงานวิจัย Resident เดิม</span>
+          </button>
+          <button type="button" id="btnPortalModeNew" onclick="setPortalMode('new')" class="px-5 py-2 rounded-lg font-heading text-xs sm:text-sm font-semibold transition flex items-center gap-2 text-slate-600 hover:text-navy-900 cursor-pointer">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+            <span>+ ลงทะเบียน Resident ใหม่</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- MODE 1: UPDATE EXISTING RESIDENT -->
+      <!-- ======================================================== -->
+      <div id="portalUpdateContainer" class="space-y-6">
+        <!-- Resident Selector Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1.5">เลือกรุ่น / ชั้นปี</label>
+              <select id="portalCohortSelect" onchange="populatePortalResidentDropdown()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-sm font-medium">
+                <option value="R1">ชั้นปีที่ 1 (R1)</option>
+                <option value="R2">ชั้นปีที่ 2 (R2)</option>
+                <option value="R3">ชั้นปีที่ 3 (R3)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1.5">เลือกชื่อ Resident</label>
+              <select id="portalResidentSelect" onchange="loadPortalResidentData()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-sm font-medium">
+                <!-- Rendered via JS -->
+              </select>
+            </div>
           </div>
         </div>
 
+        <!-- Loaded Resident Profile Form -->
+        <form id="portalFullForm" onsubmit="handlePortalFormSubmit(event)" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+          
+          <!-- SECTION 1: RESEARCH BASIC INFORMATION -->
+          <div class="space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h3 class="font-heading font-bold text-navy-900 text-base flex items-center gap-2">
+                <span>1. ข้อมูลแพทย์ประจำบ้าน & งานวิจัย</span>
+              </h3>
+              <span class="text-[11px] text-slate-400">แก้ไขได้ตลอดเวลา</span>
+            </div>
 
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อ-นามสกุล *</label>
+                <input type="text" id="portalNameInput" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-emerald-500" required>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">ปีที่เข้าศึกษา (พ.ศ.) *</label>
+                <input type="number" id="portalBatchYearInput" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-emerald-500" required>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อหัวข้องานวิจัย *</label>
+              <textarea id="portalTitleInput" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-emerald-500" required></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">สาขาย่อย</label>
+                <select id="portalSubspecialtySelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
+                  <option value="Glaucoma">Glaucoma</option>
+                  <option value="Retina">Retina</option>
+                  <option value="Cornea">Cornea & Refractive</option>
+                  <option value="Pediatric">Pediatric & Strabismus</option>
+                  <option value="Neuro-Oph">Neuro-Ophthalmology</option>
+                  <option value="Oculoplastic">Oculoplastic & Orbit</option>
+                  <option value="Uveitis">Uveitis</option>
+                  <option value="Cataract">Cataract & Comprehensive</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">ประเภทงานวิจัย</label>
+                <select id="portalDesignSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
+                  <option value="Prospective Cohort Study">Prospective Cohort Study</option>
+                  <option value="Retrospective Chart Review">Retrospective Chart Review</option>
+                  <option value="Cross-sectional Study">Cross-sectional Study</option>
+                  <option value="Randomized Controlled Trial (RCT)">Randomized Controlled Trial (RCT)</option>
+                  <option value="Diagnostic Accuracy Study">Diagnostic Accuracy Study</option>
+                  <option value="Systematic Review & Meta-analysis">Systematic Review & Meta-analysis</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dynamic Advisors Component -->
+            <div class="space-y-2 pt-1">
+              <label class="block text-xs font-semibold text-slate-700">อาจารย์ที่ปรึกษา</label>
+              <div id="portalAdvisorsList" class="space-y-2">
+                <!-- Rendered dynamically -->
+              </div>
+              <button type="button" onclick="addPortalAdvisorRow('portalAdvisorsList')" class="mt-1.5 px-3 py-1.5 rounded-lg border border-dashed border-emerald-600/70 text-emerald-800 hover:bg-emerald-50 text-xs font-medium flex items-center gap-1.5 transition cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                <span>+ เพิ่มอาจารย์ที่ปรึกษา</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- SECTION 2: MILESTONES CHECKLIST & VISUAL TIMELINE -->
+          <div class="space-y-4 pt-2">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h4 class="font-heading font-bold text-navy-900 text-base flex items-center gap-2">
+                <span>2. ขั้นตอนความก้าวหน้า (6 ขั้นตอน)</span>
+              </h4>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-500">ความก้าวหน้า:</span>
+                <span id="portalProgressPct" class="font-heading font-bold text-emerald-600 text-sm">0.0%</span>
+              </div>
+            </div>
+
+            <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+              <div id="portalProgressBar" class="bg-gradient-to-r from-emerald-500 to-teal-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <!-- Personal Visual Runway Timeline (Identical to Dashboard) -->
+            <div class="p-3.5 bg-slate-50/70 rounded-xl space-y-3">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                <div class="flex items-center gap-1.5 font-bold font-heading text-navy-900 text-xs">
+                  <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                  <span>ไทม์ไลน์เทียบกำหนดเวลา</span>
+                </div>
+                <span id="portalStatusBannerPill" class="px-2.5 py-0.5 rounded-full text-xs font-bold font-mono"></span>
+              </div>
+
+              <!-- Scrollable Runway Stepper Nodes -->
+              <div class="overflow-x-auto custom-scroll py-2">
+                <div id="portalVisualRunwayNodes" class="flex items-start justify-between min-w-[620px] px-2">
+                  <!-- Rendered dynamically matching Dashboard Runway -->
+                </div>
+              </div>
+              
+              <p class="text-[11px] text-slate-500">
+                คลิกวงกลมบนไทม์ไลน์หรือติ๊กด้านล่างเพื่ออัปเดตสถานะ
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5" id="portalMilestonesList">
+              <!-- 6 checkboxes rendered dynamically with calendar dates -->
+            </div>
+          </div>
+
+          <!-- SECTION 3: DRIVE LINK & COMMENTS (OPTIONAL) -->
+          <div class="space-y-4 pt-2">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h4 class="font-heading font-bold text-navy-900 text-base flex items-center gap-2">
+                <span>3. โน้ต & ลิงก์เอกสาร</span>
+              </h4>
+              <span class="text-[11px] text-slate-400 font-medium">ไม่บังคับกรอก (Optional)</span>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-semibold text-slate-700">
+                  ลิงก์ Google Drive รวมเอกสารวิจัย
+                </label>
+                <span class="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">ไม่บังคับ</span>
+              </div>
+              <input type="url" id="portalDriveInput" placeholder="https://drive.google.com/drive/folders/..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-xs">
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-semibold text-slate-700">
+                  บันทึกความคืบหน้า / โน้ตสั้น ๆ
+                </label>
+                <span class="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">ไม่บังคับ</span>
+              </div>
+              <textarea id="portalNotesInput" rows="3" placeholder="พิมพ์ความคืบหน้าล่าสุด หรือโน้ตจากอาจารย์ เช่น 'เก็บข้อมูลได้ 80/100 ราย' ..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-xs"></textarea>
+            </div>
+          </div>
+
+          <!-- Save Button -->
+          <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+            <span id="saveStatusMessage" class="text-xs font-medium text-emerald-600 transition-opacity opacity-0">บันทึกข้อมูลและซิงก์เข้า Dashboard เรียบร้อยแล้ว</span>
+            <button type="submit" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-heading font-semibold text-sm rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+              <span>บันทึกข้อมูล</span>
+            </button>
+          </div>
+        </form>
       </div>
 
-      <!-- Loaded Resident Profile Form -->
-      <form id="portalFullForm" onsubmit="handlePortalFormSubmit(event)" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-        
-        <!-- SECTION 1: RESEARCH BASIC INFORMATION -->
-        <div class="space-y-4">
+      <!-- ======================================================== -->
+      <!-- MODE 2: REGISTER NEW RESIDENT -->
+      <!-- ======================================================== -->
+      <div id="portalNewContainer" class="hidden">
+        <form id="portalNewResidentForm" onsubmit="handlePortalNewResidentSubmit(event)" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
           <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-            <h3 class="font-heading font-bold text-navy-900 text-base flex items-center gap-2">
-              <span>1. ข้อมูลงานวิจัย</span>
-            </h3>
-            <span class="text-[11px] text-slate-400">แก้ไขได้ตลอดเวลา</span>
+            <div>
+              <h3 class="font-heading font-bold text-navy-900 text-base sm:text-lg flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                <span>ลงทะเบียนแพทย์ประจำบ้านใหม่</span>
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">กรอกข้อมูลพื้นฐานและหัวข้องานวิจัยเพื่อเพิ่มรายชื่อเข้าสู่ระบบ</p>
+            </div>
+            <button type="button" onclick="setPortalMode('update')" class="text-xs font-semibold text-slate-500 hover:text-slate-800 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 transition">
+              ยกเลิก
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">ชั้นปี / รุ่นที่เข้าศึกษา *</label>
+              <select id="newResidentCohortTier" onchange="onNewResidentCohortChange()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-emerald-500">
+                <option value="R1">แพทย์ประจำบ้านชั้นปีที่ 1 (R1)</option>
+                <option value="R2">แพทย์ประจำบ้านชั้นปีที่ 2 (R2)</option>
+                <option value="R3">แพทย์ประจำบ้านชั้นปีที่ 3 (R3)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">ปีที่เข้าศึกษา (พ.ศ.) *</label>
+              <input type="number" id="newResidentBatch" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-emerald-500" required>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อ-นามสกุล แพทย์ประจำบ้าน *</label>
+            <input type="text" id="newResidentName" placeholder="เช่น พญ. นภัสสร วงศ์วิวัฒน์" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-emerald-500" required>
           </div>
 
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อหัวข้องานวิจัย *</label>
-            <textarea id="portalTitleInput" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-emerald-500" required></textarea>
+            <textarea id="newResidentTitle" rows="2" placeholder="ชื่อโครงการวิจัยภาษาไทย หรือ ภาษาอังกฤษ..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-emerald-500" required></textarea>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">สาขาย่อย</label>
-              <select id="portalSubspecialtySelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
+              <select id="newResidentSubspecialty" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
                 <option value="Glaucoma">Glaucoma</option>
                 <option value="Retina">Retina</option>
                 <option value="Cornea">Cornea & Refractive</option>
@@ -1045,7 +1223,7 @@
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">ประเภทงานวิจัย</label>
-              <select id="portalDesignSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
+              <select id="newResidentDesign" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
                 <option value="Prospective Cohort Study">Prospective Cohort Study</option>
                 <option value="Retrospective Chart Review">Retrospective Chart Review</option>
                 <option value="Cross-sectional Study">Cross-sectional Study</option>
@@ -1056,112 +1234,61 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">อาจารย์ที่ปรึกษาหลัก</label>
-              <select id="portalAdvisorSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
-                <!-- Populated via Staff List -->
-              </select>
+          <!-- Dynamic Advisors Component for New Resident -->
+          <div class="space-y-2 pt-1">
+            <label class="block text-xs font-semibold text-slate-700">อาจารย์ที่ปรึกษา</label>
+            <div id="newResidentAdvisorsList" class="space-y-2">
+              <!-- Rendered dynamically -->
             </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">อาจารย์ที่ปรึกษาร่วม</label>
-              <select id="portalCoAdvisorSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
-                <!-- Populated via Staff List -->
-              </select>
-            </div>
+            <button type="button" onclick="addPortalAdvisorRow('newResidentAdvisorsList')" class="mt-1.5 px-3 py-1.5 rounded-lg border border-dashed border-emerald-600/70 text-emerald-800 hover:bg-emerald-50 text-xs font-medium flex items-center gap-1.5 transition cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span>+ เพิ่มอาจารย์ที่ปรึกษา</span>
+            </button>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- Optional Link & Notes -->
+          <div class="space-y-4 pt-2 border-t border-slate-100">
             <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">ขนาดตัวอย่าง (N)</label>
-              <input type="text" id="portalTargetNInput" placeholder="เช่น 100 ตา / 50 คน" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">สถานะ IRB</label>
-              <input type="text" id="portalIrbStatusInput" placeholder="เช่น อยู่ระหว่างพิจารณา / เลขรับรอง..." class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">แหล่งทุนวิจัย</label>
-              <input type="text" id="portalFundingInput" placeholder="เช่น ทุนภาควิชา / ทุนคณะ" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs">
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 2: MILESTONES CHECKLIST & VISUAL TIMELINE -->
-        <div class="space-y-4 pt-2">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-            <h4 class="font-heading font-bold text-navy-900 text-base flex items-center gap-2">
-              <span>2. ขั้นตอนความก้าวหน้า (6 ขั้นตอน)</span>
-            </h4>
-            <div class="flex items-center gap-2">
-              <span class="text-xs text-slate-500">ความก้าวหน้า:</span>
-              <span id="portalProgressPct" class="font-heading font-bold text-emerald-600 text-sm">0.0%</span>
-            </div>
-          </div>
-
-          <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
-            <div id="portalProgressBar" class="bg-gradient-to-r from-emerald-500 to-teal-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
-          </div>
-
-          <!-- Personal Visual Runway Timeline (Identical to Dashboard) -->
-          <div class="p-3.5 bg-slate-50/70 rounded-xl space-y-3">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-              <div class="flex items-center gap-1.5 font-bold font-heading text-navy-900 text-xs">
-                <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                <span>ไทม์ไลน์เทียบกำหนดเวลา</span>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-semibold text-slate-700">
+                  ลิงก์ Google Drive รวมเอกสารวิจัย
+                </label>
+                <span class="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">ไม่บังคับ</span>
               </div>
-              <span id="portalStatusBannerPill" class="px-2.5 py-0.5 rounded-full text-xs font-bold font-mono"></span>
+              <input type="url" id="newResidentDrive" placeholder="https://drive.google.com/drive/folders/..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-xs">
             </div>
 
-            <!-- Scrollable Runway Stepper Nodes -->
-            <div class="overflow-x-auto custom-scroll py-2">
-              <div id="portalVisualRunwayNodes" class="flex items-start justify-between min-w-[620px] px-2">
-                <!-- Rendered dynamically matching Dashboard Runway -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-semibold text-slate-700">
+                  บันทึกความคืบหน้า / โน้ตสั้น ๆ
+                </label>
+                <span class="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">ไม่บังคับ</span>
               </div>
+              <textarea id="newResidentNotes" rows="2" placeholder="โน้ตเพิ่มเติม (ถ้ามี)..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-xs"></textarea>
             </div>
-            
-            <p class="text-[11px] text-slate-500">
-              คลิกวงกลมบนไทม์ไลน์หรือติ๊กด้านล่างเพื่ออัปเดตสถานะ
-            </p>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5" id="portalMilestonesList">
-            <!-- 6 checkboxes rendered dynamically with calendar dates -->
-          </div>
-        </div>
-
-        <!-- SECTION 3: DRIVE LINK & COMMENTS -->
-        <div class="space-y-4 pt-2">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-            <h4 class="font-heading font-bold text-navy-900 text-base flex items-center gap-2">
-              <span>3. โน้ต & ลิงก์เอกสาร</span>
-            </h4>
+          <!-- Milestone Notice Card -->
+          <div class="p-3.5 bg-emerald-50/60 rounded-xl border border-emerald-200/80 text-xs text-emerald-900 flex items-start gap-2.5">
+            <svg class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <div>
+              <p class="font-bold">ขั้นตอนความก้าวหน้าทั้ง 6 ขั้นตอนจะเริ่มต้นที่ 0% อัตโนมัติ</p>
+              <p class="text-[11px] text-emerald-700 mt-0.5">หลังจากบันทึกแล้ว ระบบจะเปิดหน้าอัปเดตงานวิจัยของแพทย์ประจำบ้านท่านนี้ เพื่อให้สามารถเข้ามาติ๊กบันทึกความคืบหน้าทีละขั้นตอนได้ตามจริง</p>
+            </div>
           </div>
 
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">
-              ลิงก์ Google Drive รวมเอกสารวิจัย
-            </label>
-            <input type="url" id="portalDriveInput" placeholder="https://drive.google.com/drive/folders/..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-xs">
+          <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+            <button type="button" onclick="setPortalMode('update')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium text-xs sm:text-sm transition cursor-pointer">
+              ยกเลิก
+            </button>
+            <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-heading font-medium text-xs sm:text-sm rounded-xl shadow-md transition flex items-center gap-1.5 cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+              <span>บันทึกและลงทะเบียน Resident</span>
+            </button>
           </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">
-              บันทึกความคืบหน้า / โน้ตสั้น ๆ
-            </label>
-            <textarea id="portalNotesInput" rows="3" placeholder="พิมพ์ความคืบหน้าล่าสุด หรือโน้ตจากอาจารย์ เช่น 'เก็บข้อมูลได้ 80/100 ราย' ..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-xs"></textarea>
-          </div>
-        </div>
-
-        <!-- Save Button -->
-        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-          <span id="saveStatusMessage" class="text-xs font-medium text-emerald-600 transition-opacity opacity-0">บันทึกข้อมูลและซิงก์เข้า Dashboard เรียบร้อยแล้ว</span>
-          <button type="submit" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-heading font-semibold text-sm rounded-xl shadow-md transition flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-            <span>บันทึกข้อมูล</span>
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </section>
 
     <!-- TAB 7: SETTINGS & CONFIGURATION -->
@@ -1350,91 +1477,6 @@
     </section>
 
   </main>
-
-  <!-- ========================================== -->
-  <!-- MODAL: ADD / EDIT RESIDENT -->
-  <!-- ========================================== -->
-  <div id="residentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <h3 id="residentModalTitle" class="text-lg font-heading font-bold text-navy-900">เพิ่ม / แก้ไขข้อมูล Resident</h3>
-        <button onclick="closeResidentModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
-      </div>
-
-      <form id="residentForm" onsubmit="handleResidentFormSubmit(event)" class="space-y-4 text-xs sm:text-sm">
-        <input type="hidden" id="editResidentId">
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">ปีที่เข้าศึกษา (พ.ศ.)</label>
-            <input type="number" id="inputResidentBatch" placeholder="เช่น 2569" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium" required>
-            <p class="text-[10px] text-slate-400 mt-0.5">ระบบจะคำนวณชั้นปี R1, R2, R3 หรือจบแล้วให้อัตโนมัติ</p>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">ชื่อ-นามสกุล</label>
-            <input type="text" id="inputResidentName" placeholder="เช่น พญ. นภัสสร วงศ์วิวัฒน์" class="w-full px-3 py-2 rounded-xl border border-slate-300" required>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">สาขาที่สนใจ</label>
-            <select id="inputResidentSubspecialty" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
-              <option value="Glaucoma">Glaucoma</option>
-              <option value="Retina">Retina</option>
-              <option value="Cornea">Cornea & Refractive</option>
-              <option value="Pediatric">Pediatric & Strabismus</option>
-              <option value="Neuro-Oph">Neuro-Ophthalmology</option>
-              <option value="Oculoplastic">Oculoplastic & Orbit</option>
-              <option value="Uveitis">Uveitis</option>
-              <option value="Cataract">Cataract & Comprehensive</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">ประเภทงานวิจัย</label>
-            <select id="inputResidentDesign" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
-              <option value="Prospective Cohort Study">Prospective Cohort Study</option>
-              <option value="Retrospective Chart Review">Retrospective Chart Review</option>
-              <option value="Cross-sectional Study">Cross-sectional Study</option>
-              <option value="Randomized Controlled Trial (RCT)">Randomized Controlled Trial (RCT)</option>
-              <option value="Diagnostic Accuracy Study">Diagnostic Accuracy Study</option>
-              <option value="Systematic Review & Meta-analysis">Systematic Review & Meta-analysis</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">ชื่อหัวข้องานวิจัย</label>
-          <textarea id="inputResidentTitle" rows="2" placeholder="ชื่อโครงการวิจัยภาษาไทย หรือ ภาษาอังกฤษ..." class="w-full px-3 py-2 rounded-xl border border-slate-300" required></textarea>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">อาจารย์ที่ปรึกษาหลัก</label>
-            <select id="inputResidentAdvisor" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
-              <!-- Rendered from staff list -->
-            </select>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">อาจารย์ที่ปรึกษาร่วม (ถ้ามี)</label>
-            <select id="inputResidentCoAdvisor" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium">
-              <!-- Rendered from staff list -->
-            </select>
-          </div>
-        </div>
-
-        <div class="pt-2">
-          <label class="block font-semibold text-slate-700 mb-1">ลิงก์ Google Drive รวมเอกสารวิจัย</label>
-          <input type="url" id="inputResidentDrive" placeholder="https://drive.google.com/..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs">
-        </div>
-
-        <div class="flex items-center justify-end space-x-2 pt-4 border-t border-slate-100">
-          <button type="button" onclick="closeResidentModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium">ยกเลิก</button>
-          <button type="submit" class="px-5 py-2 bg-navy-700 hover:bg-navy-800 text-white font-heading font-medium rounded-xl shadow-md">บันทึกข้อมูล</button>
-        </div>
-      </form>
-    </div>
-  </div>
 
   <!-- ========================================== -->
   <!-- MODAL: ADD / EDIT RESEARCH FORUM -->
@@ -2826,7 +2868,7 @@ function initData() {
                 </div>
                 <div class="flex items-center gap-1 shrink-0">
                   ${r.driveLink ? `<a href="${r.driveLink}" target="_blank" class="p-1 rounded text-blue-600 hover:bg-blue-50" title="เปิด Google Drive"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a>` : ''}
-                  <button onclick="openResidentEditModal('', '${r.id}')" class="p-1 rounded text-slate-400 hover:text-navy-700 hover:bg-slate-100" title="แก้ไขข้อมูลพื้นฐาน"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
+                  <button onclick="jumpToResidentPortal('${r.id}')" class="p-1 rounded text-slate-400 hover:text-navy-700 hover:bg-slate-100" title="เข้าสู่ Resident Portal เพื่อแก้ไขข้อมูลหรืออัปเดตงาน"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
                 </div>
               </div>
 
@@ -3060,13 +3102,9 @@ function initData() {
                 <span class="font-heading font-bold text-sm text-navy-900">${status.pct}%</span>
               </div>
               <span class="px-3 py-1 rounded-full text-xs border font-bold ${status.class}">${status.label}</span>
-              <button onclick="openResidentEditModal('', '${r.id}')" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs flex items-center gap-1" title="แก้ไขข้อมูลพื้นฐาน">
-                <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                <span class="hidden sm:inline">แก้ไข</span>
-              </button>
-              <button onclick="jumpToResidentPortal('${r.id}')" class="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs flex items-center gap-1" title="เข้าสู่หน้าอัปเดตงาน">
+              <button onclick="jumpToResidentPortal('${r.id}')" class="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs flex items-center gap-1" title="เข้าสู่หน้า Resident Portal เพื่อแก้ไขข้อมูลหรืออัปเดตงาน">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                <span>อัปเดต</span>
+                <span>แก้ไข / อัปเดตงาน</span>
               </button>
               <button onclick="deleteResident('${r.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50" title="ลบข้อมูล">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -4324,8 +4362,143 @@ function initData() {
     }
 
     // --------------------------------------------------------
-    // RESIDENT SELF-UPDATE PORTAL
+    // RESIDENT SELF-UPDATE & REGISTRATION PORTAL
     // --------------------------------------------------------
+    let portalMode = 'update'; // 'update' or 'new'
+
+    function setPortalMode(mode) {
+      portalMode = mode;
+      const btnUpdate = document.getElementById("btnPortalModeUpdate");
+      const btnNew = document.getElementById("btnPortalModeNew");
+      const updateContainer = document.getElementById("portalUpdateContainer");
+      const newContainer = document.getElementById("portalNewContainer");
+
+      if (mode === 'new') {
+        if (btnUpdate) {
+          btnUpdate.className = "px-5 py-2 rounded-lg font-heading text-xs sm:text-sm font-semibold transition flex items-center gap-2 text-slate-600 hover:text-navy-900 cursor-pointer";
+        }
+        if (btnNew) {
+          btnNew.className = "px-5 py-2 rounded-lg font-heading text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-white text-navy-900 shadow-xs cursor-pointer";
+        }
+        if (updateContainer) updateContainer.classList.add("hidden");
+        if (newContainer) newContainer.classList.remove("hidden");
+        initNewResidentForm();
+      } else {
+        if (btnUpdate) {
+          btnUpdate.className = "px-5 py-2 rounded-lg font-heading text-xs sm:text-sm font-bold transition flex items-center gap-2 bg-white text-navy-900 shadow-xs cursor-pointer";
+        }
+        if (btnNew) {
+          btnNew.className = "px-5 py-2 rounded-lg font-heading text-xs sm:text-sm font-semibold transition flex items-center gap-2 text-slate-600 hover:text-navy-900 cursor-pointer";
+        }
+        if (updateContainer) updateContainer.classList.remove("hidden");
+        if (newContainer) newContainer.classList.add("hidden");
+        populatePortalResidentDropdown();
+      }
+    }
+
+    function onNewResidentCohortChange() {
+      const tierSelect = document.getElementById("newResidentCohortTier");
+      const tier = tierSelect ? tierSelect.value : 'R1';
+      const curAY = appData.academicYearConfig ? appData.academicYearConfig.currentYear : 2569;
+      let targetBatch = curAY;
+      if (tier === 'R2') targetBatch = curAY - 1;
+      if (tier === 'R3') targetBatch = curAY - 2;
+      const batchInput = document.getElementById("newResidentBatch");
+      if (batchInput) batchInput.value = targetBatch;
+    }
+
+    function initNewResidentForm() {
+      const tierSelect = document.getElementById("newResidentCohortTier");
+      if (tierSelect) tierSelect.value = 'R1';
+      onNewResidentCohortChange();
+
+      const nameInput = document.getElementById("newResidentName");
+      if (nameInput) nameInput.value = '';
+
+      const titleInput = document.getElementById("newResidentTitle");
+      if (titleInput) titleInput.value = '';
+
+      const subSelect = document.getElementById("newResidentSubspecialty");
+      if (subSelect) subSelect.value = 'Glaucoma';
+
+      const designSelect = document.getElementById("newResidentDesign");
+      if (designSelect) designSelect.value = 'Prospective Cohort Study';
+
+      const driveInput = document.getElementById("newResidentDrive");
+      if (driveInput) driveInput.value = '';
+
+      const notesInput = document.getElementById("newResidentNotes");
+      if (notesInput) notesInput.value = '';
+
+      renderDynamicAdvisorsList('newResidentAdvisorsList', ['']);
+    }
+
+    // Dynamic Advisors Component Engine
+    function renderDynamicAdvisorsList(containerId, advisorsList) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const staffList = appData.staff || [];
+      const staffOptions = staffList.map(s => `<option value="${s.name}">${s.name} (${s.field || s.subspecialty || s.role || ''})</option>`).join("");
+      
+      const list = (Array.isArray(advisorsList) && advisorsList.length > 0) ? advisorsList : [''];
+
+      container.innerHTML = list.map((advVal, idx) => {
+        const isPrimary = (idx === 0);
+        return `
+          <div class="flex items-center gap-2">
+            <div class="flex-grow">
+              <div class="flex items-center justify-between mb-0.5">
+                <span class="text-[11px] font-medium ${isPrimary ? 'text-navy-900 font-semibold' : 'text-slate-600'}">
+                  ${isPrimary ? 'อาจารย์ที่ปรึกษาหลัก *' : `อาจารย์ที่ปรึกษาร่วม (ท่านที่ ${idx})`}
+                </span>
+              </div>
+              <select data-advisor-idx="${idx}" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-emerald-500 bg-white">
+                <option value="">-- เลือกอาจารย์ที่ปรึกษา --</option>
+                ${staffOptions}
+              </select>
+            </div>
+            ${!isPrimary ? `
+              <button type="button" onclick="removePortalAdvisorRow('${containerId}', ${idx})" class="mt-4 p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition cursor-pointer" title="ลบอาจารย์ท่านนี้">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              </button>
+            ` : '<div class="w-8 shrink-0"></div>'}
+          </div>
+        `;
+      }).join("");
+
+      // Set selected values
+      const selects = container.querySelectorAll("select");
+      selects.forEach((sel, i) => {
+        if (list[i]) sel.value = list[i];
+      });
+    }
+
+    function addPortalAdvisorRow(containerId) {
+      const current = getDynamicAdvisors(containerId);
+      current.push('');
+      renderDynamicAdvisorsList(containerId, current);
+    }
+
+    function removePortalAdvisorRow(containerId, index) {
+      const current = getDynamicAdvisors(containerId);
+      current.splice(index, 1);
+      if (current.length === 0) current.push('');
+      renderDynamicAdvisorsList(containerId, current);
+    }
+
+    function getDynamicAdvisors(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return [];
+      const selects = container.querySelectorAll("select");
+      const res = [];
+      selects.forEach(s => {
+        if (s.value) res.push(s.value);
+        else res.push('');
+      });
+      return res;
+    }
+
     function populatePortalResidentDropdown() {
       const cohortTier = document.getElementById("portalCohortSelect").value;
       const select = document.getElementById("portalResidentSelect");
@@ -4343,16 +4516,21 @@ function initData() {
       const resId = document.getElementById("portalResidentSelect").value;
       const res = (appData.residents || []).find(r => r.id === resId);
       if (!res) {
-        document.getElementById("portalTitleInput").value = "";
-        document.getElementById("portalTargetNInput").value = "";
-        document.getElementById("portalIrbStatusInput").value = "";
-        document.getElementById("portalFundingInput").value = "";
-        document.getElementById("portalDriveInput").value = "";
-        document.getElementById("portalNotesInput").value = "";
+        const nameInput = document.getElementById("portalNameInput");
+        if (nameInput) nameInput.value = "";
+        const batchInput = document.getElementById("portalBatchYearInput");
+        if (batchInput) batchInput.value = "";
+        const titleInput = document.getElementById("portalTitleInput");
+        if (titleInput) titleInput.value = "";
+        const driveInput = document.getElementById("portalDriveInput");
+        if (driveInput) driveInput.value = "";
+        const notesInput = document.getElementById("portalNotesInput");
+        if (notesInput) notesInput.value = "";
+        renderDynamicAdvisorsList('portalAdvisorsList', ['']);
         document.getElementById("portalProgressPct").textContent = "0.0%";
         document.getElementById("portalProgressBar").style.width = "0%";
         const list = document.getElementById("portalMilestonesList");
-        if (list) list.innerHTML = `<div class="col-span-1 sm:col-span-2 text-center p-6 text-slate-400 text-xs bg-slate-50 rounded-xl border border-dashed border-slate-200">ยังไม่มีรายชื่อแพทย์ประจำบ้านในชั้นปีนี้ (สามารถเพิ่มได้ที่หน้ารายชั้นปี)</div>`;
+        if (list) list.innerHTML = `<div class="col-span-1 sm:col-span-2 text-center p-6 text-slate-400 text-xs bg-slate-50 rounded-xl border border-dashed border-slate-200">ยังไม่มีรายชื่อแพทย์ประจำบ้านในชั้นปีนี้ (กดแท็บ '+ ลงทะเบียน Resident ใหม่' ด้านบนเพื่อเริ่มต้น)</div>`;
         const runway = document.getElementById("portalVisualRunwayNodes");
         if (runway) runway.innerHTML = `<div class="w-full text-center py-4 text-slate-400 text-xs">ยังไม่มีข้อมูลแพทย์ประจำบ้าน</div>`;
         const pill = document.getElementById("portalStatusBannerPill");
@@ -4363,16 +4541,27 @@ function initData() {
         return;
       }
 
-      populatePortalAdvisorSelects();
-
+      document.getElementById("portalNameInput").value = res.name || "";
+      document.getElementById("portalBatchYearInput").value = res.batchYear || 2569;
       document.getElementById("portalTitleInput").value = res.title || "";
       document.getElementById("portalSubspecialtySelect").value = res.subspecialty || "Glaucoma";
-      document.getElementById("portalDesignSelect").value = res.design || "Prospective Cohort Study";
-      document.getElementById("portalAdvisorSelect").value = res.advisor || "";
-      document.getElementById("portalCoAdvisorSelect").value = res.coAdvisor || "-";
-      document.getElementById("portalTargetNInput").value = res.targetN || "";
-      document.getElementById("portalIrbStatusInput").value = res.irbStatus || "";
-      document.getElementById("portalFundingInput").value = res.funding || "";
+      document.getElementById("portalDesignSelect").value = res.design || res.studyDesign || "Prospective Cohort Study";
+
+      // Populate dynamic advisors
+      let advList = [];
+      if (Array.isArray(res.advisors) && res.advisors.length > 0) {
+        advList = [...res.advisors];
+      } else {
+        if (res.advisor) advList.push(res.advisor);
+        if (res.coAdvisor && res.coAdvisor !== '-') {
+          res.coAdvisor.split(',').forEach(a => {
+            const trimmed = a.trim();
+            if (trimmed && trimmed !== '-') advList.push(trimmed);
+          });
+        }
+      }
+      if (advList.length === 0) advList = [''];
+      renderDynamicAdvisorsList('portalAdvisorsList', advList);
 
       document.getElementById("portalDriveInput").value = res.driveLink || "";
       document.getElementById("portalNotesInput").value = res.notes || "";
@@ -4381,17 +4570,12 @@ function initData() {
     }
 
     function populatePortalAdvisorSelects() {
+      // Maintained for backward compatibility
       const advSelect = document.getElementById("portalAdvisorSelect");
-      const coSelect = document.getElementById("portalCoAdvisorSelect");
-      const staffList = appData.staff || [];
-      if (staffList.length === 0) {
-        advSelect.innerHTML = `<option value="">-- ยังไม่มีรายชื่ออาจารย์ในระบบ --</option>`;
-        coSelect.innerHTML = `<option value="-">- ไม่มีอาจารย์ที่ปรึกษาร่วม -</option>`;
-        return;
+      if (advSelect) {
+        const staffList = appData.staff || [];
+        advSelect.innerHTML = staffList.map(s => `<option value="${s.name}">${s.name}</option>`).join("");
       }
-      const options = staffList.map(s => `<option value="${s.name}">${s.name} (${s.field || s.subspecialty || s.role || ''})</option>`).join("");
-      advSelect.innerHTML = options;
-      coSelect.innerHTML = `<option value="-">- ไม่มีอาจารย์ที่ปรึกษาร่วม -</option>` + options;
     }
 
     function renderPortalMilestones(res) {
@@ -4525,22 +4709,104 @@ function initData() {
       }
     }
 
+    function handlePortalNewResidentSubmit(e) {
+      e.preventDefault();
+      const cohortTier = document.getElementById("newResidentCohortTier").value;
+      const batchYear = parseInt(document.getElementById("newResidentBatch").value, 10);
+      const name = document.getElementById("newResidentName").value.trim();
+      const title = document.getElementById("newResidentTitle").value.trim();
+      const subspecialty = document.getElementById("newResidentSubspecialty").value;
+      const design = document.getElementById("newResidentDesign").value;
+      const driveLink = document.getElementById("newResidentDrive").value.trim();
+      const notes = document.getElementById("newResidentNotes").value.trim();
+
+      if (!name) {
+        alert("กรุณากรอกชื่อ-นามสกุลของแพทย์ประจำบ้าน");
+        return;
+      }
+      if (!title) {
+        alert("กรุณากรอกชื่อหัวข้องานวิจัย");
+        return;
+      }
+
+      const rawAdvisors = getDynamicAdvisors('newResidentAdvisorsList');
+      const cleanAdvisors = rawAdvisors.filter(Boolean);
+      const primaryAdvisor = cleanAdvisors[0] || '';
+      const coAdvisor = cleanAdvisors.slice(1).join(', ');
+
+      const newId = `res-${batchYear}-${Date.now()}`;
+      const newResident = {
+        id: newId,
+        batchYear: batchYear,
+        name: name,
+        subspecialty: subspecialty,
+        design: design,
+        studyDesign: design,
+        title: title,
+        advisor: primaryAdvisor,
+        coAdvisor: coAdvisor,
+        advisors: cleanAdvisors,
+        driveLink: driveLink,
+        notes: notes,
+        checks: [false, false, false, false, false, false],
+        milestones: [false, false, false, false, false, false]
+      };
+
+      if (!appData.residents) appData.residents = [];
+      appData.residents.push(newResident);
+
+      saveData();
+      syncResidentToCloud(newResident);
+      renderDashboard();
+
+      const tier = getResidentCohortTier({ batchYear });
+      if (['R1', 'R2', 'R3'].includes(tier)) {
+        renderCohortTimelineView(tier);
+      }
+
+      // Switch to update mode and select the newly added resident
+      setPortalMode('update');
+      document.getElementById("portalCohortSelect").value = (cohortTier === "Alumni" ? "R3" : cohortTier);
+      populatePortalResidentDropdown();
+      document.getElementById("portalResidentSelect").value = newId;
+      loadPortalResidentData();
+
+      alert(`ลงทะเบียน ${name} เรียบร้อยแล้ว ระบบเปิดหน้าอัปเดตงานวิจัยให้แล้วครับ`);
+    }
+
     function handlePortalFormSubmit(e) {
       e.preventDefault();
       const resId = document.getElementById("portalResidentSelect").value;
       const res = (appData.residents || []).find(r => r.id === resId);
       if (!res) return;
 
+      const name = document.getElementById("portalNameInput").value.trim();
+      const batchYear = parseInt(document.getElementById("portalBatchYearInput").value, 10);
+      const title = document.getElementById("portalTitleInput").value.trim();
+      const subspecialty = document.getElementById("portalSubspecialtySelect").value;
+      const design = document.getElementById("portalDesignSelect").value;
 
+      if (!name) {
+        alert("กรุณากรอกชื่อ-นามสกุล");
+        return;
+      }
+      if (!title) {
+        alert("กรุณากรอกชื่อหัวข้องานวิจัย");
+        return;
+      }
 
-      res.title = document.getElementById("portalTitleInput").value.trim();
-      res.subspecialty = document.getElementById("portalSubspecialtySelect").value;
-      res.design = document.getElementById("portalDesignSelect").value;
-      res.advisor = document.getElementById("portalAdvisorSelect").value;
-      res.coAdvisor = document.getElementById("portalCoAdvisorSelect").value;
-      res.targetN = document.getElementById("portalTargetNInput").value.trim();
-      res.irbStatus = document.getElementById("portalIrbStatusInput").value.trim();
-      res.funding = document.getElementById("portalFundingInput").value.trim();
+      res.name = name;
+      res.batchYear = batchYear || res.batchYear;
+      res.title = title;
+      res.subspecialty = subspecialty;
+      res.design = design;
+      res.studyDesign = design;
+
+      const rawAdvisors = getDynamicAdvisors('portalAdvisorsList');
+      const cleanAdvisors = rawAdvisors.filter(Boolean);
+      res.advisor = cleanAdvisors[0] || '';
+      res.coAdvisor = cleanAdvisors.slice(1).join(', ');
+      res.advisors = cleanAdvisors;
 
       const checks = [];
       for (let i = 0; i < 6; i++) {
@@ -4548,6 +4814,7 @@ function initData() {
         checks.push(cb ? cb.checked : false);
       }
       res.checks = checks;
+      res.milestones = checks;
 
       res.driveLink = document.getElementById("portalDriveInput").value.trim();
       res.notes = document.getElementById("portalNotesInput").value.trim();
@@ -4556,9 +4823,18 @@ function initData() {
       syncResidentToCloud(res);
       renderDashboard();
 
+      const tier = getResidentCohortTier(res);
+      if (['R1', 'R2', 'R3'].includes(tier)) {
+        renderCohortTimelineView(tier);
+      } else if (tier === 'Alumni') {
+        renderAlumniView();
+      }
+
       const msg = document.getElementById("saveStatusMessage");
-      msg.classList.remove("opacity-0");
-      setTimeout(() => msg.classList.add("opacity-0"), 3500);
+      if (msg) {
+        msg.classList.remove("opacity-0");
+        setTimeout(() => msg.classList.add("opacity-0"), 3500);
+      }
     }
 
     function jumpToResidentPortal(resId) {
@@ -4567,6 +4843,7 @@ function initData() {
 
       const tier = getResidentCohortTier(res);
       switchTab('resident');
+      setPortalMode('update');
       document.getElementById("portalCohortSelect").value = (tier === "Alumni" ? "R3" : tier);
       populatePortalResidentDropdown();
       document.getElementById("portalResidentSelect").value = res.id;
@@ -4709,135 +4986,29 @@ function initData() {
     // --------------------------------------------------------
     // CRUD: RESIDENTS
     // --------------------------------------------------------
+    // Shim for any legacy callers to direct to Resident Portal
     function openResidentEditModal(defaultCohortTier = 'R1', resId = null) {
-      const form = document.getElementById("residentForm");
-      if (form) form.reset();
-      document.getElementById("editResidentId").value = resId || "";
-
-      const curAY = appData.academicYearConfig ? appData.academicYearConfig.currentYear : 2569;
-      populateAdvisorDropdowns();
-
       if (resId) {
-        const res = (appData.residents || []).find(r => r.id === resId);
-        if (res) {
-          document.getElementById("residentModalTitle").textContent = "แก้ไขข้อมูล Resident";
-          document.getElementById("inputResidentBatch").value = res.batchYear;
-          document.getElementById("inputResidentName").value = res.name || "";
-          document.getElementById("inputResidentSubspecialty").value = res.subspecialty || "Glaucoma";
-          document.getElementById("inputResidentDesign").value = res.design || res.studyDesign || "Prospective Cohort Study";
-          document.getElementById("inputResidentTitle").value = res.title || "";
-          document.getElementById("inputResidentAdvisor").value = res.advisor || "";
-          document.getElementById("inputResidentCoAdvisor").value = res.coAdvisor || "-";
-          document.getElementById("inputResidentDrive").value = res.driveLink || "";
-          document.getElementById("residentModal").classList.remove("hidden");
-          return;
+        jumpToResidentPortal(resId);
+      } else {
+        switchTab('resident');
+        setPortalMode('new');
+        if (defaultCohortTier) {
+          const curAY = appData.academicYearConfig ? appData.academicYearConfig.currentYear : 2569;
+          let targetBatch = curAY;
+          if (defaultCohortTier === 'R2') targetBatch = curAY - 1;
+          if (defaultCohortTier === 'R3') targetBatch = curAY - 2;
+          const batchEl = document.getElementById("newResidentBatch");
+          if (batchEl) {
+            batchEl.value = targetBatch;
+            onNewResidentCohortChange();
+          }
         }
       }
-
-      let targetBatch = curAY;
-      if (defaultCohortTier === 'R2') targetBatch = curAY - 1;
-      if (defaultCohortTier === 'R3') targetBatch = curAY - 2;
-
-      document.getElementById("inputResidentBatch").value = targetBatch;
-      document.getElementById("residentModalTitle").textContent = "เพิ่ม Resident ใหม่";
-      document.getElementById("residentModal").classList.remove("hidden");
     }
 
     function closeResidentModal() {
-      const modal = document.getElementById("residentModal");
-      if (modal) modal.classList.add("hidden");
-      const form = document.getElementById("residentForm");
-      if (form) form.reset();
-      document.getElementById("editResidentId").value = "";
-    }
-
-    function populateAdvisorDropdowns() {
-      const advSelect = document.getElementById("inputResidentAdvisor");
-      const coSelect = document.getElementById("inputResidentCoAdvisor");
-      const staffList = appData.staff || [];
-      if (staffList.length === 0) {
-        advSelect.innerHTML = `<option value="">-- ยังไม่มีรายชื่ออาจารย์ (เพิ่มได้ในการตั้งค่า) --</option>`;
-        coSelect.innerHTML = `<option value="-">- ไม่มีอาจารย์ที่ปรึกษาร่วม -</option>`;
-        return;
-      }
-      const options = staffList.map(s => `<option value="${s.name}">${s.name} (${s.field || s.subspecialty || s.role || ''})</option>`).join("");
-      advSelect.innerHTML = options;
-      coSelect.innerHTML = `<option value="-">- ไม่มีอาจารย์ที่ปรึกษาร่วม -</option>` + options;
-    }
-
-    function handleResidentFormSubmit(e) {
-      e.preventDefault();
-      const id = document.getElementById("editResidentId").value;
-      const batchYear = parseInt(document.getElementById("inputResidentBatch").value, 10);
-      const name = document.getElementById("inputResidentName").value.trim();
-      const subspecialty = document.getElementById("inputResidentSubspecialty").value;
-      const design = document.getElementById("inputResidentDesign").value;
-      const title = document.getElementById("inputResidentTitle").value.trim();
-      const advisor = document.getElementById("inputResidentAdvisor").value;
-      const coAdvisor = document.getElementById("inputResidentCoAdvisor").value;
-      const driveLink = document.getElementById("inputResidentDrive").value.trim();
-
-      if (!name) {
-        alert("กรุณากรอกชื่อ-นามสกุลของ Resident");
-        return;
-      }
-      if (!title) {
-        alert("กรุณากรอกชื่อหัวข้องานวิจัย");
-        return;
-      }
-
-      let savedResident = null;
-      if (id) {
-        const res = (appData.residents || []).find(r => r.id === id);
-        if (res) {
-          res.batchYear = batchYear;
-          res.name = name;
-          res.subspecialty = subspecialty;
-          res.design = design;
-          res.studyDesign = design;
-          res.title = title;
-          res.advisor = advisor;
-          res.coAdvisor = coAdvisor;
-          res.driveLink = driveLink;
-          savedResident = res;
-        }
-      } else {
-        const newId = `res-${batchYear}-${Date.now()}`;
-        savedResident = {
-          id: newId,
-          batchYear,
-          name,
-          subspecialty,
-          design,
-          studyDesign: design,
-          title,
-          advisor,
-          coAdvisor,
-          driveLink,
-          checks: [false, false, false, false, false, false],
-          milestones: [false, false, false, false, false, false],
-          notes: ""
-        };
-        if (!appData.residents) appData.residents = [];
-        appData.residents.push(savedResident);
-      }
-
-      saveData();
-      if (savedResident) {
-        syncResidentToCloud(savedResident);
-      }
-      closeResidentModal();
-      renderDashboard();
-      if (typeof populatePortalResidentDropdown === "function") {
-        populatePortalResidentDropdown();
-      }
-      const tier = getResidentCohortTier({ batchYear });
-      if (['R1', 'R2', 'R3'].includes(tier)) {
-        renderCohortTimelineView(tier);
-      } else if (tier === 'Alumni') {
-        renderAlumniView();
-      }
-      alert(`บันทึกข้อมูล ${name} เรียบร้อยแล้ว`);
+      // Legacy modal removed; no-op
     }
 
     function deleteResident(id) {
