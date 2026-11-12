@@ -1294,11 +1294,24 @@
 
     <!-- TAB 7: SETTINGS & CONFIGURATION -->
     <section id="view-settings" class="hidden space-y-6">
-      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-xl font-heading font-bold text-navy-900">ตั้งค่าระบบ</h2>
-          <p class="text-xs text-slate-500 mt-0.5">จัดการปีการศึกษา, กรอบเวลาหลักสูตร, รอบ Forum และสำรองข้อมูล</p>
+      <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-2xl bg-navy-50 text-navy-800 border border-navy-100 flex items-center justify-center font-bold shrink-0 shadow-2xs">
+            <svg class="w-5 h-5 text-navy-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          </div>
+          <div>
+            <h2 class="text-lg sm:text-xl font-heading font-bold text-navy-900">ตั้งค่าระบบและฐานข้อมูล (System Settings)</h2>
+            <p class="text-xs text-slate-500 mt-0.5">จัดการปีการศึกษา, กรอบเวลาหลักสูตร 6 ขั้นตอน, รอบ Forum, อาจารย์ที่ปรึกษา และระบบสำรองข้อมูล</p>
+          </div>
         </div>
+        <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+          <span class="text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-50 text-slate-700 border border-slate-200 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>ปีการศึกษา: <strong id="settingsHeaderAyBadge" class="font-mono text-navy-900">2569</strong></span>
+          </span>
+        </div>
+      </div>
+
       <!-- DUAL-LAYER CLOUD & LOCAL BACKUP CENTER -->
       <div class="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
@@ -4982,6 +4995,11 @@ function initData() {
     // SETTINGS TAB: MASTER CURRICULUM CONFIGURATION
     // --------------------------------------------------------
     function renderSettings() {
+      // Academic year badge
+      const curAY = appData.academicYearConfig ? appData.academicYearConfig.currentYear : 2569;
+      const ayBadge = document.getElementById("settingsHeaderAyBadge");
+      if (ayBadge) ayBadge.textContent = curAY;
+
       // Render Dashboard section ordering controls
       renderDashboardOrderSettings();
 
