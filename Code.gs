@@ -168,6 +168,13 @@ function saveCurriculumTemplate(templateList) {
     const sheet = ss.getSheetByName(SHEET_NAMES.CURRICULUM);
     if (!sheet) throw new Error('Curriculum sheet not found');
 
+    // Auto-create Cloud Snapshot before modifying curriculum
+    try {
+      createSpreadsheetSnapshot();
+    } catch(e) {
+      Logger.log('Auto-snapshot before curriculum save error: ' + e);
+    }
+
     sheet.clearContents();
     const headers = ['stage', 'name', 'shortName', 'detail', 'startMonth', 'startCurriculumYear', 'endMonth', 'endCurriculumYear'];
     const rows = [headers];
@@ -178,10 +185,10 @@ function saveCurriculumTemplate(templateList) {
         t.name,
         t.shortName,
         t.detail,
-        t.startMonth,
-        t.startCurriculumYear,
-        t.endMonth,
-        t.endCurriculumYear
+        parseInt(t.startMonth, 10),
+        parseInt(t.startCurriculumYear, 10),
+        parseInt(t.endMonth, 10),
+        parseInt(t.endCurriculumYear, 10)
       ]);
     });
 

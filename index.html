@@ -2040,6 +2040,9 @@
     function applyGasData(gasData) {
       if (!gasData) return;
       appData = gasData;
+      if (gasData.curriculumTemplate && Array.isArray(gasData.curriculumTemplate) && gasData.curriculumTemplate.length === 6) {
+        appData.curriculumTemplate = gasData.curriculumTemplate;
+      }
       if (gasData.staffList) {
         appData.staff = gasData.staffList;
       } else if (!appData.staff) {
@@ -2061,9 +2064,15 @@
       saveData();
       refreshAcademicYear();
       renderDashboard();
+      if (typeof renderCohortTimelineView === "function") {
+        renderCohortTimelineView('R1');
+        renderCohortTimelineView('R2');
+        renderCohortTimelineView('R3');
+      }
       if (typeof renderSettings === "function") renderSettings();
       if (typeof populatePortalAdvisorSelects === "function") populatePortalAdvisorSelects();
       if (typeof populatePortalResidentDropdown === "function") populatePortalResidentDropdown();
+      if (typeof loadPortalResidentData === "function") loadPortalResidentData();
     }
 
     function syncResidentToCloud(resident) {
@@ -2154,9 +2163,21 @@
 
     function syncCurriculumToCloud(template) {
       if (!IS_GAS) return;
-      updateGasSyncStatus("syncing", "กำลังบันทึกหลักสูตร...");
+      updateGasSyncStatus("syncing", "กำลังบันทึกกรอบเวลาลง Sheet...");
       google.script.run
-        .withSuccessHandler(() => updateGasSyncStatus("online", "ซิงก์ Sheet เรียบร้อย"))
+        .withSuccessHandler((res) => {
+          if (res && res.success) {
+            updateGasSyncStatus("online", "ซิงก์กรอบเวลาลง Sheet สำเร็จ");
+            if (typeof fetchSpreadsheetSnapshots === "function") fetchSpreadsheetSnapshots();
+          } else {
+            updateGasSyncStatus("error", "ซิงก์กรอบเวลาล้มเหลว");
+            console.error("saveCurriculumTemplate failed:", res && res.error);
+          }
+        })
+        .withFailureHandler((err) => {
+          updateGasSyncStatus("error", "เชื่อมต่อ Sheet ขัดข้อง");
+          console.error("saveCurriculumTemplate network error:", err);
+        })
         .saveCurriculumTemplate(template);
     }
 
@@ -2283,7 +2304,7 @@ function initData() {
       if (stored) {
         try {
           appData = JSON.parse(stored);
-          if (!appData.curriculumTemplate || appData.curriculumTemplate.length !== 6 || appData.curriculumTemplate[0].startMonth !== 6) {
+          if (!appData.curriculumTemplate || !Array.isArray(appData.curriculumTemplate) || appData.curriculumTemplate.length !== 6) {
             appData.curriculumTemplate = JSON.parse(JSON.stringify(DEFAULT_DATA.curriculumTemplate));
           }
           if (!appData.dashboardSectionOrder || appData.dashboardSectionOrder.length !== 5) {
@@ -5052,10 +5073,10 @@ function initData() {
             <div>
               <span class="text-slate-500 block mb-0.5">เริ่ม:</span>
               <div class="flex gap-1">
-                <select id="cfgStepSM_${idx}" class="w-full p-1 rounded border border-slate-300">
+                <select id="cfgStepSM_${idx}" onchange="renderCurriculumLivePreview()" class="w-full p-1 rounded border border-slate-300">
                   ${THAI_MONTHS.map((m, mI) => `<option value="${mI}" ${step.startMonth === mI ? 'selected' : ''}>${m}</option>`).join("")}
                 </select>
-                <select id="cfgStepSY_${idx}" class="w-20 p-1 rounded border border-slate-300 font-medium">
+                <select id="cfgStepSY_${idx}" onchange="renderCurriculumLivePreview()" class="w-20 p-1 rounded border border-slate-300 font-medium">
                   <option value="1" ${step.startCurriculumYear === 1 ? 'selected' : ''}>ปี 1</option>
                   <option value="2" ${step.startCurriculumYear === 2 ? 'selected' : ''}>ปี 2</option>
                   <option value="3" ${step.startCurriculumYear === 3 ? 'selected' : ''}>ปี 3</option>
@@ -5065,10 +5086,10 @@ function initData() {
             <div>
               <span class="text-slate-500 block mb-0.5">สิ้นสุด:</span>
               <div class="flex gap-1">
-                <select id="cfgStepEM_${idx}" class="w-full p-1 rounded border border-slate-300">
+                <select id="cfgStepEM_${idx}" onchange="renderCurriculumLivePreview()" class="w-full p-1 rounded border border-slate-300">
                   ${THAI_MONTHS.map((m, mI) => `<option value="${mI}" ${step.endMonth === mI ? 'selected' : ''}>${m}</option>`).join("")}
                 </select>
-                <select id="cfgStepEY_${idx}" class="w-20 p-1 rounded border border-slate-300 font-medium">
+                <select id="cfgStepEY_${idx}" onchange="renderCurriculumLivePreview()" class="w-20 p-1 rounded border border-slate-300 font-medium">
                   <option value="1" ${step.endCurriculumYear === 1 ? 'selected' : ''}>ปี 1</option>
                   <option value="2" ${step.endCurriculumYear === 2 ? 'selected' : ''}>ปี 2</option>
                   <option value="3" ${step.endCurriculumYear === 3 ? 'selected' : ''}>ปี 3</option>
@@ -5087,16 +5108,38 @@ function initData() {
       const previewEl = document.getElementById("curriculumLivePreview");
       if (!previewEl) return;
 
-      const curAY = appData.academicYearConfig.currentYear;
+      const curAY = appData.academicYearConfig ? appData.academicYearConfig.currentYear : 2569;
       const sampleBatches = [
         { label: "R1", batch: curAY },
         { label: "R2", batch: curAY - 1 },
         { label: "R3", batch: curAY - 2 }
       ];
 
+      // Read current form inputs if available, else fallback to appData
+      const liveTemplate = (appData.curriculumTemplate && appData.curriculumTemplate.length === 6)
+        ? JSON.parse(JSON.stringify(appData.curriculumTemplate))
+        : JSON.parse(JSON.stringify(DEFAULT_DATA.curriculumTemplate));
+
+      for (let i = 0; i < 6; i++) {
+        const smEl = document.getElementById(`cfgStepSM_${i}`);
+        const syEl = document.getElementById(`cfgStepSY_${i}`);
+        const emEl = document.getElementById(`cfgStepEM_${i}`);
+        const eyEl = document.getElementById(`cfgStepEY_${i}`);
+        if (smEl && syEl && emEl && eyEl) {
+          liveTemplate[i].startMonth = parseInt(smEl.value, 10);
+          liveTemplate[i].startCurriculumYear = parseInt(syEl.value, 10);
+          liveTemplate[i].endMonth = parseInt(emEl.value, 10);
+          liveTemplate[i].endCurriculumYear = parseInt(eyEl.value, 10);
+        }
+      }
+
       previewEl.innerHTML = sampleBatches.map(b => {
-        const dummyRes = { batchYear: b.batch };
-        const ms = getResidentMilestones(dummyRes);
+        const ms = liveTemplate.map(step => {
+          const startYear = getCalendarYear(b.batch, step.startCurriculumYear, step.startMonth);
+          const endYear = getCalendarYear(b.batch, step.endCurriculumYear, step.endMonth);
+          const rangeStr = `${THAI_MONTHS_SHORT[step.startMonth]} ${startYear} - ${THAI_MONTHS_SHORT[step.endMonth]} ${endYear}`;
+          return { ...step, rangeStr };
+        });
         return `
           <div class="p-1.5 bg-white rounded-lg border border-slate-200">
             <strong class="text-navy-900">${b.label} (รุ่น ${b.batch}):</strong>
@@ -5127,9 +5170,21 @@ function initData() {
 
       appData.curriculumTemplate = template;
       saveData();
+      syncCurriculumToCloud(template);
       renderDashboard();
       renderCurriculumLivePreview();
-      alert("บันทึกกรอบเวลาหลักสูตรเรียบร้อยแล้ว");
+      if (typeof renderCohortTimelineView === 'function') {
+        renderCohortTimelineView('R1');
+        renderCohortTimelineView('R2');
+        renderCohortTimelineView('R3');
+      }
+      if (typeof populatePortalResidentDropdown === 'function') {
+        populatePortalResidentDropdown();
+      }
+      if (typeof loadPortalResidentData === 'function') {
+        loadPortalResidentData();
+      }
+      alert("บันทึกกรอบเวลาหลักสูตรเรียบร้อยแล้ว ระบบซิงก์ข้อมูลขึ้น Google Sheets และอัปเดตทุกหน้าจอให้ทันที");
     }
 
     // --------------------------------------------------------
