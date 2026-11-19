@@ -499,8 +499,8 @@
 
               <!-- View Scale Switcher -->
               <div class="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-heading">
-                <button id="btnGantt12m" onclick="setMasterGanttScale('12m')" class="px-3 py-1 rounded-md bg-white text-navy-900 font-bold shadow-xs transition">12 เดือน (ปีนี้)</button>
-                <button id="btnGantt36m" onclick="setMasterGanttScale('36m')" class="px-3 py-1 rounded-md text-slate-600 hover:text-navy-900 font-medium transition">36 เดือน (ตลอดหลักสูตร)</button>
+                <button id="btnGantt12m" onclick="setMasterGanttScale('12m')" class="px-3 py-1 rounded-md text-slate-600 hover:text-navy-900 font-medium transition">12 เดือน (ปีนี้)</button>
+                <button id="btnGantt36m" onclick="setMasterGanttScale('36m')" class="px-3 py-1 rounded-md bg-white text-navy-900 font-bold shadow-xs transition">36 เดือน (ตลอดหลักสูตร)</button>
               </div>
             </div>
 
@@ -666,8 +666,8 @@
               <span>ชั้นปีที่ 1 (R1)</span>
             </span>
             <div class="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-heading">
-              <button id="btnGantt12m-r1" onclick="setCohortGanttScale('R1', '12m')" class="px-3 py-1 rounded-md bg-white text-navy-900 font-bold shadow-xs transition">12 เดือน (ปีนี้)</button>
-              <button id="btnGantt36m-r1" onclick="setCohortGanttScale('R1', '36m')" class="px-3 py-1 rounded-md text-slate-600 hover:text-navy-900 font-medium transition">36 เดือน (ตลอดหลักสูตร)</button>
+              <button id="btnGantt12m-r1" onclick="setCohortGanttScale('R1', '12m')" class="px-3 py-1 rounded-md text-slate-600 hover:text-navy-900 font-medium transition">12 เดือน (ปีนี้)</button>
+              <button id="btnGantt36m-r1" onclick="setCohortGanttScale('R1', '36m')" class="px-3 py-1 rounded-md bg-white text-navy-900 font-bold shadow-xs transition">36 เดือน (ตลอดหลักสูตร)</button>
             </div>
           </div>
 
@@ -773,8 +773,8 @@
               <span>ชั้นปีที่ 2 (R2)</span>
             </span>
             <div class="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-heading">
-              <button id="btnGantt12m-r2" onclick="setCohortGanttScale('R2', '12m')" class="px-3 py-1 rounded-md bg-white text-navy-900 font-bold shadow-xs transition">12 เดือน (ปีนี้)</button>
-              <button id="btnGantt36m-r2" onclick="setCohortGanttScale('R2', '36m')" class="px-3 py-1 rounded-md text-slate-600 hover:text-navy-900 font-medium transition">36 เดือน (ตลอดหลักสูตร)</button>
+              <button id="btnGantt12m-r2" onclick="setCohortGanttScale('R2', '12m')" class="px-3 py-1 rounded-md text-slate-600 hover:text-navy-900 font-medium transition">12 เดือน (ปีนี้)</button>
+              <button id="btnGantt36m-r2" onclick="setCohortGanttScale('R2', '36m')" class="px-3 py-1 rounded-md bg-white text-navy-900 font-bold shadow-xs transition">36 เดือน (ตลอดหลักสูตร)</button>
             </div>
           </div>
 
@@ -880,8 +880,8 @@
               <span>ชั้นปีที่ 3 (R3)</span>
             </span>
             <div class="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-heading">
-              <button id="btnGantt12m-r3" onclick="setCohortGanttScale('R3', '12m')" class="px-3 py-1 rounded-md bg-white text-navy-900 font-bold shadow-xs transition">12 เดือน (ปีนี้)</button>
-              <button id="btnGantt36m-r3" onclick="setCohortGanttScale('R3', '36m')" class="px-3 py-1 rounded-md text-slate-600 hover:text-navy-900 font-medium transition">36 เดือน (ตลอดหลักสูตร)</button>
+              <button id="btnGantt12m-r3" onclick="setCohortGanttScale('R3', '12m')" class="px-3 py-1 rounded-md text-slate-600 hover:text-navy-900 font-medium transition">12 เดือน (ปีนี้)</button>
+              <button id="btnGantt36m-r3" onclick="setCohortGanttScale('R3', '36m')" class="px-3 py-1 rounded-md bg-white text-navy-900 font-bold shadow-xs transition">36 เดือน (ตลอดหลักสูตร)</button>
             </div>
           </div>
 
@@ -1972,7 +1972,7 @@
     // --------------------------------------------------------
     let appData = {};
     let masterTimelineMode = 'kanban'; // 'kanban' (default), 'runway', 'gantt'
-    let masterGanttScale = '12m'; // '12m' or '36m'
+    let masterGanttScale = '36m'; // '12m' or '36m' (default 36m)
     let kanbanCohortFilter = 'all'; // 'all', 'R1', 'R2', 'R3'
     let kanbanStatusFilter = 'all'; // 'all', 'delayed', 'ontrack'
     let kanbanAdvisorFilter = 'all'; // 'all' or staff name
@@ -1980,7 +1980,7 @@
     let atRiskCohortFilter = 'all'; // 'all', 'R1', 'R2', 'R3'
     let ganttCohortFilter = 'all'; // 'all', 'R1', 'R2', 'R3'
     let cohortTimelineMode = { R1: 'gantt', R2: 'gantt', R3: 'gantt' }; // 'gantt', 'runway', 'kanban'
-    let cohortGanttScale = { R1: '12m', R2: '12m', R3: '12m' }; // '12m', '36m'
+    let cohortGanttScale = { R1: '36m', R2: '36m', R3: '36m' }; // '12m', '36m' (default 36m)
 
     const STORAGE_KEY = "resident_tracker_preview_v6";
 
@@ -3527,25 +3527,27 @@ function initData() {
           </div>
         `;
       } else {
-        // 36-Month Full Curriculum View
+        // 36-Month Full Curriculum View (Continuous Gantt Bars with Full Thai Labels)
         let topHeaderCols = `
-          <div class="p-2 bg-slate-100 border-r border-b border-slate-200 font-bold text-slate-700 text-xs">
-            แพทย์ประจำบ้าน & ข้อมูลวิจัย
+          <div class="p-2.5 bg-slate-100 border-r border-b border-slate-200 font-bold text-slate-700 text-xs flex items-center justify-between">
+            <span>แพทย์ประจำบ้าน & ข้อมูลวิจัย</span>
+            <span class="text-[10px] font-mono text-slate-500 font-normal">ตลอดหลักสูตร 36 เดือน</span>
           </div>
-          <div style="grid-column: span 12;" class="p-1.5 text-center bg-blue-50 border-r border-b border-blue-200 font-bold text-blue-900 text-xs">
+          <div style="grid-column: span 12;" class="p-1.5 text-center bg-blue-50/80 border-r border-b border-blue-200 font-bold text-blue-950 text-xs">
             ปีที่ 1 (R1 - 12 เดือน)
           </div>
-          <div style="grid-column: span 12;" class="p-1.5 text-center bg-teal-50 border-r border-b border-teal-200 font-bold text-teal-900 text-xs">
+          <div style="grid-column: span 12;" class="p-1.5 text-center bg-teal-50/80 border-r border-b border-teal-200 font-bold text-teal-950 text-xs">
             ปีที่ 2 (R2 - 12 เดือน)
           </div>
-          <div style="grid-column: span 12;" class="p-1.5 text-center bg-slate-100 border-r border-b border-slate-300 font-bold text-slate-800 text-xs">
+          <div style="grid-column: span 12;" class="p-1.5 text-center bg-indigo-50/80 border-r border-b border-indigo-200 font-bold text-indigo-950 text-xs">
             ปีที่ 3 (R3 - 12 เดือน)
           </div>
         `;
 
         let monthHeaderCols = `
-          <div class="p-2 bg-slate-50 border-r border-b border-slate-200 font-semibold text-slate-500 text-[10px]">
-            ชื่อแพทย์ / สถานะ
+          <div class="p-2 bg-slate-50 border-r border-b border-slate-200 font-semibold text-slate-500 text-[11px] flex items-center justify-between">
+            <span>รายชื่อ / สาขา / ที่ปรึกษา</span>
+            <span class="text-[10px] font-mono tabular-nums">ความคืบหน้า</span>
           </div>
         `;
         for (let y = 0; y < 3; y++) {
@@ -3564,9 +3566,14 @@ function initData() {
           const batchYear = curAY - (tier === 'R1' ? 0 : (tier === 'R2' ? 1 : 2));
 
           rowsHtml += `
-            <div style="grid-column: 1 / -1;" class="py-2 px-3 bg-navy-50 border-b border-navy-200 flex items-center justify-between text-xs font-bold text-navy-900">
-              <span>แพทย์ประจำบ้านชั้นปีที่ ${tier.replace('R','')} (${tier} - รุ่น ${batchYear})</span>
-              <span class="px-2 py-0.5 rounded-full bg-white text-navy-900 border border-navy-200 font-mono tabular-nums text-[11px]">${cohortResidents.length} ท่าน</span>
+            <div style="grid-column: 1 / -1;" class="py-2 px-3 bg-navy-50 border-b border-navy-200/80 flex items-center justify-between text-xs font-bold text-navy-900">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-navy-800"></span>
+                <span>แพทย์ประจำบ้านชั้นปีที่ ${tier.replace('R','')} (${tier} - รุ่นปี ${batchYear})</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-full bg-white text-navy-900 border border-navy-200 font-mono tabular-nums text-[11px]">
+                ${cohortResidents.length} ท่าน
+              </span>
             </div>
           `;
 
@@ -3583,45 +3590,114 @@ function initData() {
             const status = computeResidentStatus(res);
             const milestones = getResidentMilestones(res);
 
-            let cells = "";
-            for (let m = 0; m < 36; m++) {
-              let bar = "";
-              milestones.forEach((mObj, idx) => {
-                const sMonth36 = (mObj.startCurriculumYear - 1) * 12 + (mObj.startMonth >= 6 ? mObj.startMonth - 6 : mObj.startMonth + 6);
-                const eMonth36 = (mObj.endCurriculumYear - 1) * 12 + (mObj.endMonth >= 6 ? mObj.endMonth - 6 : mObj.endMonth + 6);
-                if (m >= sMonth36 && m <= eMonth36) {
-                  const isDone = checks[idx];
-                  if (isDone) {
-                    bar = `<div onclick="jumpToResidentPortal('${res.id}')" class="h-5 w-full rounded bg-emerald-600 text-[9px] text-white flex items-center justify-center font-bold cursor-pointer hover:bg-emerald-700 transition" title="${mObj.name} (ผ่านแล้ว)">✓</div>`;
-                  } else {
-                    const todayScore = nowYearBE * 12 + now.getMonth();
-                    const eScore = mObj.endYear * 12 + mObj.endMonth;
-                    if (eScore < todayScore) {
-                      bar = `<div onclick="jumpToResidentPortal('${res.id}')" class="h-5 w-full rounded bg-amber-500 text-[9px] text-white flex items-center justify-center font-bold cursor-pointer hover:bg-amber-600 transition" title="${mObj.name} (หลุด Timeframe)">!</div>`;
-                    } else {
-                      bar = `<div onclick="jumpToResidentPortal('${res.id}')" class="h-5 w-full rounded bg-blue-600 text-[9px] text-white flex items-center justify-center font-semibold cursor-pointer hover:bg-blue-700 transition" title="${mObj.name}">${idx + 1}</div>`;
-                    }
-                  }
-                }
-              });
+            // Left info cell (260px)
+            let residentInfoHtml = `
+              <div class="p-2.5 border-r border-b border-slate-200 flex flex-col justify-between bg-white space-y-1.5">
+                <div class="flex items-start justify-between gap-1">
+                  <div onclick="jumpToResidentPortal('${res.id}')" class="font-bold text-navy-900 truncate cursor-pointer hover:text-navy-700 text-xs" title="${res.name}">
+                    ${res.name}
+                  </div>
+                  <span class="text-[10px] font-bold ${status.isDelayed ? 'text-amber-800' : 'text-emerald-700'} font-mono tabular-nums">
+                    ${status.pct}%
+                  </span>
+                </div>
+                <div class="flex items-center justify-between text-[10px] text-slate-500">
+                  <span class="truncate max-w-[130px]" title="อาจารย์: ${res.advisor}">อ. ${res.advisor.replace(/^(นพ.|พญ.|อ.|รศ.|ผศ.)\s*/, '')}</span>
+                  <span class="font-semibold ${status.isDelayed ? 'text-amber-800' : 'text-emerald-700'}">
+                    ${status.isDelayed ? `ช้า ${status.overdueMonths} ด.` : 'ตามแผน'}
+                  </span>
+                </div>
+              </div>
+            `;
 
-              cells += `
-                <div class="p-0.5 border-r border-b border-slate-200 flex items-center justify-center bg-white ${m % 12 === 0 ? 'border-l-2 border-l-navy-700' : ''}">
-                  ${bar}
+            // Background 36-month grid columns
+            let bgColsHtml = "";
+            for (let m = 0; m < 36; m++) {
+              const isYearStart = (m % 12 === 0);
+              bgColsHtml += `<div class="flex-1 border-r border-slate-100 ${isYearStart ? 'border-l-2 border-l-navy-700' : ''}"></div>`;
+            }
+
+            // Resident's current progress in 36m (TODAY indicator line)
+            const resBatch = parseInt(res.batchYear, 10);
+            const startCurriculumScore = resBatch * 12 + 6; // July of entry year
+            const curResidentCurriculumMonth = todayScore - startCurriculumScore;
+            let todayLineHtml = "";
+            if (curResidentCurriculumMonth >= 0 && curResidentCurriculumMonth < 36) {
+              const todayLineLeftPct = ((curResidentCurriculumMonth + 0.5) / 36) * 100;
+              todayLineHtml = `
+                <div class="absolute top-0 bottom-0 w-[2px] bg-red-500 z-10 pointer-events-none" style="left: calc(${todayLineLeftPct}% - 1px);" title="วันนี้: ${THAI_MONTHS_SHORT[nowMonth]} ${nowYearBE} (เดือนที่ ${curResidentCurriculumMonth + 1} ของหลักสูตร)">
+                  <div class="w-1.5 h-1.5 rounded-full bg-red-600 -translate-x-[2px] -top-0.5 absolute"></div>
                 </div>
               `;
             }
 
-            rowsHtml += `
-              <div class="p-2 border-r border-b border-slate-200 flex flex-col justify-between text-xs bg-white space-y-1">
-                <div class="flex items-start justify-between gap-1">
-                  <div onclick="jumpToResidentPortal('${res.id}')" class="font-bold text-navy-900 truncate cursor-pointer hover:text-navy-700" title="${res.name}">${res.name}</div>
-                  <span class="text-[10px] font-bold ${status.isDelayed ? 'text-amber-800' : 'text-emerald-700'} font-mono tabular-nums">${status.pct}%</span>
+            // Continuous milestone bars spanning start to end month with full Thai text
+            let milestoneBarsHtml = "";
+            milestones.forEach((mObj, idx) => {
+              const sMonth36 = (mObj.startCurriculumYear - 1) * 12 + (mObj.startMonth >= 6 ? mObj.startMonth - 6 : mObj.startMonth + 6);
+              const eMonth36 = (mObj.endCurriculumYear - 1) * 12 + (mObj.endMonth >= 6 ? mObj.endMonth - 6 : mObj.endMonth + 6);
+              const duration = Math.max(1, eMonth36 - sMonth36 + 1);
+              const leftPct = (sMonth36 / 36) * 100;
+              const widthPct = (duration / 36) * 100;
+
+              const isDone = checks[idx];
+              const eScore = mObj.endYear * 12 + mObj.endMonth;
+              const isOverdue = !isDone && (eScore < todayScore);
+              const isCurrentActive = (idx === status.currentStageIndex);
+
+              let barClass = "";
+              let barContent = "";
+              let tooltip = "";
+
+              if (isDone) {
+                barClass = "bg-emerald-600 text-white hover:bg-emerald-700 shadow-xs";
+                barContent = `
+                  <span class="mr-1 text-[10px]">✓</span>
+                  <span class="truncate font-bold">${mObj.shortName}</span>
+                `;
+                tooltip = `${res.name}: ${mObj.name} (${mObj.rangeStr}) (ผ่านแล้ว)`;
+              } else if (isOverdue) {
+                barClass = "bg-amber-500 text-white ring-2 ring-amber-300 hover:bg-amber-600 shadow-xs";
+                barContent = `
+                  <span class="mr-1 text-[10px] font-bold">!</span>
+                  <span class="truncate font-bold">${mObj.shortName}</span>
+                `;
+                tooltip = `${res.name}: ${mObj.name} (${mObj.rangeStr}) (หลุดกรอบเวลาเป้าหมาย ช้า ${status.overdueMonths} เดือน)`;
+              } else if (isCurrentActive) {
+                barClass = "bg-blue-600 text-white ring-1 ring-blue-300 hover:bg-blue-700 shadow-xs";
+                barContent = `
+                  <span class="truncate font-semibold">${mObj.shortName}</span>
+                `;
+                tooltip = `${res.name}: ${mObj.name} (${mObj.rangeStr}) (กำลังดำเนินการตามแผน)`;
+              } else {
+                barClass = "bg-slate-100/90 text-slate-700 border border-slate-300 hover:bg-slate-200 transition";
+                barContent = `
+                  <span class="truncate font-medium">${idx + 1}. ${mObj.shortName}</span>
+                `;
+                tooltip = `${res.name}: ${mObj.name} (${mObj.rangeStr}) (ตามกรอบเวลาหลักสูตร)`;
+              }
+
+              milestoneBarsHtml += `
+                <div onclick="jumpToResidentPortal('${res.id}')"
+                     style="left: calc(${leftPct}% + 1px); width: calc(${widthPct}% - 2px);"
+                     class="absolute top-2 bottom-2 rounded-md ${barClass} flex items-center justify-center px-1.5 text-[10px] sm:text-[11px] cursor-pointer transition select-none z-[5]"
+                     title="${tooltip}">
+                  ${barContent}
                 </div>
-                <div class="text-[10px] text-slate-500 truncate">${res.subspecialty} | อ. ${res.advisor.replace(/^(นพ.|พญ.|อ.|รศ.|ผศ.)\s*/, '')}</div>
+              `;
+            });
+
+            const timelineTrackHtml = `
+              <div style="grid-column: span 36;" class="relative h-12 border-r border-b border-slate-200 bg-white">
+                <div class="absolute inset-0 flex pointer-events-none">
+                  ${bgColsHtml}
+                </div>
+                ${todayLineHtml}
+                ${milestoneBarsHtml}
               </div>
-              ${cells}
             `;
+
+            rowsHtml += residentInfoHtml + timelineTrackHtml;
           });
         });
 
@@ -4312,7 +4388,7 @@ function initData() {
       renderUnifiedGantt({
         containerId: `gantt-${tLower}-container`,
         cohortFilter: cohortTier,
-        scale: cohortGanttScale[cohortTier] || '12m',
+        scale: cohortGanttScale[cohortTier] || '36m',
         legendContainerId: `gantt-${tLower}-legend`,
         todayBadgeId: `gantt-${tLower}-today-badge`
       });
@@ -5465,7 +5541,7 @@ function initData() {
         // Reset state variables to defaults
         appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
         masterTimelineMode = 'kanban';
-        masterGanttScale = '12m';
+        masterGanttScale = '36m';
         ganttCohortFilter = 'all';
         atRiskCohortFilter = 'all';
         kanbanCohortFilter = 'all';
@@ -5473,7 +5549,7 @@ function initData() {
         kanbanAdvisorFilter = 'all';
         kanbanSearchQuery = '';
         cohortTimelineMode = { R1: 'gantt', R2: 'gantt', R3: 'gantt' };
-        cohortGanttScale = { R1: '12m', R2: '12m', R3: '12m' };
+        cohortGanttScale = { R1: '36m', R2: '36m', R3: '36m' };
 
         saveData();
         refreshAcademicYear();
