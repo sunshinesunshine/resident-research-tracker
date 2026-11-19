@@ -84,20 +84,26 @@
     }
     .custom-scroll {
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #94a3b8 #f1f5f9;
     }
-    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-    .custom-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 9999px; }
-    .custom-scroll::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
+    .custom-scroll::-webkit-scrollbar { width: 8px; height: 10px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 6px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 6px; border: 2px solid #f1f5f9; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background-color: #64748b; }
     
     /* Gantt Matrix Grid Styles (Elevated Craft) */
     .gantt-grid {
       display: grid;
       grid-template-columns: 260px repeat(12, minmax(76px, 1fr));
+      width: max-content;
+      min-width: 100%;
     }
     .gantt-grid-36 {
       display: grid;
-      grid-template-columns: 260px repeat(36, minmax(44px, 1fr));
+      grid-template-columns: 260px repeat(36, minmax(64px, 1fr));
+      width: max-content;
+      min-width: 2564px;
     }
     .today-line {
       position: absolute;
@@ -504,9 +510,34 @@
               </div>
             </div>
 
+            <!-- Gantt Quick Scroll Navigation Toolbar -->
+            <div class="flex items-center justify-between gap-2 px-2 py-1.5 text-xs bg-slate-100/70 rounded-lg border border-slate-200/70">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-slate-600 font-bold flex items-center gap-1 text-[11px] pl-1">
+                  <svg class="w-3.5 h-3.5 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                  เลื่อนดูช่วงเวลา:
+                </span>
+                <button type="button" onclick="scrollGanttTimeline('masterGanttViewport', 'y1')" class="px-2.5 py-1 rounded bg-white text-blue-900 hover:bg-blue-50 font-bold border border-blue-200 shadow-2xs transition text-[11px]">ปี 1 (R1)</button>
+                <button type="button" onclick="scrollGanttTimeline('masterGanttViewport', 'y2')" class="px-2.5 py-1 rounded bg-white text-teal-900 hover:bg-teal-50 font-bold border border-teal-200 shadow-2xs transition text-[11px]">ปี 2 (R2)</button>
+                <button type="button" onclick="scrollGanttTimeline('masterGanttViewport', 'y3')" class="px-2.5 py-1 rounded bg-white text-indigo-900 hover:bg-indigo-50 font-bold border border-indigo-200 shadow-2xs transition text-[11px]">ปี 3 (R3)</button>
+                <button type="button" onclick="scrollGanttTimeline('masterGanttViewport', 'today')" class="px-2.5 py-1 rounded bg-white text-red-700 hover:bg-red-50 font-bold border border-red-200 shadow-2xs transition text-[11px] flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                  วันนี้ (TODAY)
+                </button>
+              </div>
+              <div class="flex items-center gap-1">
+                <button type="button" onclick="scrollGanttTimeline('masterGanttViewport', -350)" class="px-2.5 py-1 rounded bg-white text-slate-700 hover:bg-slate-50 font-bold border border-slate-300 shadow-2xs transition text-[11px] flex items-center gap-1" title="เลื่อนซ้าย">
+                  <span>◀</span> <span class="hidden sm:inline">เลื่อนซ้าย</span>
+                </button>
+                <button type="button" onclick="scrollGanttTimeline('masterGanttViewport', 350)" class="px-2.5 py-1 rounded bg-white text-slate-700 hover:bg-slate-50 font-bold border border-slate-300 shadow-2xs transition text-[11px] flex items-center gap-1" title="เลื่อนขวา">
+                  <span class="hidden sm:inline">เลื่อนขวา</span> <span>▶</span>
+                </button>
+              </div>
+            </div>
+
             <!-- Gantt Matrix Scrollable Viewport -->
-            <div class="overflow-x-auto custom-scroll border border-slate-200/70 rounded-xl bg-slate-50/30">
-              <div id="masterGanttContainer" class="min-w-[1180px] relative p-3">
+            <div id="masterGanttViewport" class="overflow-x-auto custom-scroll border border-slate-200/70 rounded-xl bg-slate-50/30 cursor-grab">
+              <div id="masterGanttContainer" class="w-max min-w-full relative p-3">
                 <!-- Rendered via JS -->
               </div>
             </div>
@@ -671,9 +702,30 @@
             </div>
           </div>
 
+          <!-- Gantt Quick Scroll Navigation Toolbar -->
+          <div class="flex items-center justify-between gap-2 px-2 py-1.5 text-xs bg-slate-100/70 rounded-lg border border-slate-200/70">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-slate-600 font-bold flex items-center gap-1 text-[11px] pl-1">
+                <svg class="w-3.5 h-3.5 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                เลื่อนดู:
+              </span>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r1-viewport', 'y1')" class="px-2.5 py-1 rounded bg-white text-blue-900 hover:bg-blue-50 font-bold border border-blue-200 shadow-2xs transition text-[11px]">ปี 1 (R1)</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r1-viewport', 'y2')" class="px-2.5 py-1 rounded bg-white text-teal-900 hover:bg-teal-50 font-bold border border-teal-200 shadow-2xs transition text-[11px]">ปี 2 (R2)</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r1-viewport', 'y3')" class="px-2.5 py-1 rounded bg-white text-indigo-900 hover:bg-indigo-50 font-bold border border-indigo-200 shadow-2xs transition text-[11px]">ปี 3 (R3)</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r1-viewport', 'today')" class="px-2.5 py-1 rounded bg-white text-red-700 hover:bg-red-50 font-bold border border-red-200 shadow-2xs transition text-[11px] flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                วันนี้
+              </button>
+            </div>
+            <div class="flex items-center gap-1">
+              <button type="button" onclick="scrollGanttTimeline('gantt-r1-viewport', -350)" class="px-2 py-1 rounded bg-white text-slate-700 hover:bg-slate-50 font-bold border border-slate-300 shadow-2xs transition text-[11px]" title="เลื่อนซ้าย">◀ ซ้าย</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r1-viewport', 350)" class="px-2 py-1 rounded bg-white text-slate-700 hover:bg-slate-50 font-bold border border-slate-300 shadow-2xs transition text-[11px]" title="เลื่อนขวา">ขวา ▶</button>
+            </div>
+          </div>
+
           <!-- Gantt Matrix Viewport -->
-          <div class="overflow-x-auto custom-scroll border border-slate-200/70 rounded-xl bg-slate-50/30">
-            <div id="gantt-r1-container" class="min-w-[1180px] relative p-3">
+          <div id="gantt-r1-viewport" class="overflow-x-auto custom-scroll border border-slate-200/70 rounded-xl bg-slate-50/30 cursor-grab">
+            <div id="gantt-r1-container" class="w-max min-w-full relative p-3">
               <!-- Rendered via JS -->
             </div>
           </div>
@@ -778,9 +830,30 @@
             </div>
           </div>
 
+          <!-- Gantt Quick Scroll Navigation Toolbar -->
+          <div class="flex items-center justify-between gap-2 px-2 py-1.5 text-xs bg-slate-100/70 rounded-lg border border-slate-200/70">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-slate-600 font-bold flex items-center gap-1 text-[11px] pl-1">
+                <svg class="w-3.5 h-3.5 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                เลื่อนดู:
+              </span>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r2-viewport', 'y1')" class="px-2.5 py-1 rounded bg-white text-blue-900 hover:bg-blue-50 font-bold border border-blue-200 shadow-2xs transition text-[11px]">ปี 1 (R1)</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r2-viewport', 'y2')" class="px-2.5 py-1 rounded bg-white text-teal-900 hover:bg-teal-50 font-bold border border-teal-200 shadow-2xs transition text-[11px]">ปี 2 (R2)</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r2-viewport', 'y3')" class="px-2.5 py-1 rounded bg-white text-indigo-900 hover:bg-indigo-50 font-bold border border-indigo-200 shadow-2xs transition text-[11px]">ปี 3 (R3)</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r2-viewport', 'today')" class="px-2.5 py-1 rounded bg-white text-red-700 hover:bg-red-50 font-bold border border-red-200 shadow-2xs transition text-[11px] flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                วันนี้
+              </button>
+            </div>
+            <div class="flex items-center gap-1">
+              <button type="button" onclick="scrollGanttTimeline('gantt-r2-viewport', -350)" class="px-2 py-1 rounded bg-white text-slate-700 hover:bg-slate-50 font-bold border border-slate-300 shadow-2xs transition text-[11px]" title="เลื่อนซ้าย">◀ ซ้าย</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r2-viewport', 350)" class="px-2 py-1 rounded bg-white text-slate-700 hover:bg-slate-50 font-bold border border-slate-300 shadow-2xs transition text-[11px]" title="เลื่อนขวา">ขวา ▶</button>
+            </div>
+          </div>
+
           <!-- Gantt Matrix Viewport -->
-          <div class="overflow-x-auto custom-scroll border border-slate-200/70 rounded-xl bg-slate-50/30">
-            <div id="gantt-r2-container" class="min-w-[1180px] relative p-3">
+          <div id="gantt-r2-viewport" class="overflow-x-auto custom-scroll border border-slate-200/70 rounded-xl bg-slate-50/30 cursor-grab">
+            <div id="gantt-r2-container" class="w-max min-w-full relative p-3">
               <!-- Rendered via JS -->
             </div>
           </div>
@@ -885,9 +958,30 @@
             </div>
           </div>
 
+          <!-- Gantt Quick Scroll Navigation Toolbar -->
+          <div class="flex items-center justify-between gap-2 px-2 py-1.5 text-xs bg-slate-100/70 rounded-lg border border-slate-200/70">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-slate-600 font-bold flex items-center gap-1 text-[11px] pl-1">
+                <svg class="w-3.5 h-3.5 text-navy-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                เลื่อนดู:
+              </span>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r3-viewport', 'y1')" class="px-2.5 py-1 rounded bg-white text-blue-900 hover:bg-blue-50 font-bold border border-blue-200 shadow-2xs transition text-[11px]">ปี 1 (R1)</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r3-viewport', 'y2')" class="px-2.5 py-1 rounded bg-white text-teal-900 hover:bg-teal-50 font-bold border border-teal-200 shadow-2xs transition text-[11px]">ปี 2 (R2)</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r3-viewport', 'y3')" class="px-2.5 py-1 rounded bg-white text-indigo-900 hover:bg-indigo-50 font-bold border border-indigo-200 shadow-2xs transition text-[11px]">ปี 3 (R3)</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r3-viewport', 'today')" class="px-2.5 py-1 rounded bg-white text-red-700 hover:bg-red-50 font-bold border border-red-200 shadow-2xs transition text-[11px] flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                วันนี้
+              </button>
+            </div>
+            <div class="flex items-center gap-1">
+              <button type="button" onclick="scrollGanttTimeline('gantt-r3-viewport', -350)" class="px-2 py-1 rounded bg-white text-slate-700 hover:bg-slate-50 font-bold border border-slate-300 shadow-2xs transition text-[11px]" title="เลื่อนซ้าย">◀ ซ้าย</button>
+              <button type="button" onclick="scrollGanttTimeline('gantt-r3-viewport', 350)" class="px-2 py-1 rounded bg-white text-slate-700 hover:bg-slate-50 font-bold border border-slate-300 shadow-2xs transition text-[11px]" title="เลื่อนขวา">ขวา ▶</button>
+            </div>
+          </div>
+
           <!-- Gantt Matrix Viewport -->
-          <div class="overflow-x-auto custom-scroll border border-slate-200/70 rounded-xl bg-slate-50/30">
-            <div id="gantt-r3-container" class="min-w-[1180px] relative p-3">
+          <div id="gantt-r3-viewport" class="overflow-x-auto custom-scroll border border-slate-200/70 rounded-xl bg-slate-50/30 cursor-grab">
+            <div id="gantt-r3-container" class="w-max min-w-full relative p-3">
               <!-- Rendered via JS -->
             </div>
           </div>
@@ -3306,6 +3400,71 @@ function initData() {
       renderMasterGantt();
     }
 
+    // --------------------------------------------------------
+    // GANTT SCROLL TIMELINE & DRAG-TO-SCROLL ENGINE
+    // --------------------------------------------------------
+    function scrollGanttTimeline(viewportId, target) {
+      const vp = document.getElementById(viewportId);
+      if (!vp) return;
+      if (typeof target === 'number') {
+        vp.scrollBy({ left: target, behavior: 'smooth' });
+        return;
+      }
+      const scrollableWidth = Math.max(0, vp.scrollWidth - 260);
+      if (target === 'start' || target === 'y1') {
+        vp.scrollTo({ left: 0, behavior: 'smooth' });
+      } else if (target === 'y2') {
+        const targetLeft = Math.round(scrollableWidth * (12 / 36));
+        vp.scrollTo({ left: targetLeft, behavior: 'smooth' });
+      } else if (target === 'y3') {
+        const targetLeft = Math.round(scrollableWidth * (24 / 36));
+        vp.scrollTo({ left: targetLeft, behavior: 'smooth' });
+      } else if (target === 'today') {
+        const todayMarker = vp.querySelector('[title*="วันนี้"]') || vp.querySelector('[title*="TODAY"]');
+        if (todayMarker) {
+          const leftPos = todayMarker.offsetLeft;
+          vp.scrollTo({ left: Math.max(0, leftPos - vp.clientWidth / 2), behavior: 'smooth' });
+        } else {
+          vp.scrollTo({ left: 0, behavior: 'smooth' });
+        }
+      }
+    }
+
+    function initDragToScroll(viewportId) {
+      const vp = document.getElementById(viewportId);
+      if (!vp || vp._hasDragInit) return;
+      vp._hasDragInit = true;
+
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      vp.addEventListener('mousedown', (e) => {
+        if (e.target.closest('button, a, input, select, [onclick]')) return;
+        isDown = true;
+        vp.classList.add('cursor-grabbing');
+        vp.classList.remove('cursor-grab');
+        startX = e.pageX - vp.offsetLeft;
+        scrollLeft = vp.scrollLeft;
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDown) {
+          isDown = false;
+          vp.classList.remove('cursor-grabbing');
+          vp.classList.add('cursor-grab');
+        }
+      });
+
+      vp.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - vp.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        vp.scrollLeft = scrollLeft - walk;
+      });
+    }
+
     function renderMasterGantt() {
       renderUnifiedGantt({
         containerId: "masterGanttContainer",
@@ -3372,7 +3531,7 @@ function initData() {
         // 12-Month Academic View (July curAY to June curAY+1)
         // Double-layer header: Semester row + Month row
         let topSemesterRow = `
-          <div class="p-2 bg-slate-100 border-r border-b border-slate-200 font-bold text-slate-700 text-xs flex items-center justify-between">
+          <div class="p-2 bg-slate-100 border-r border-b border-slate-200 font-bold text-slate-700 text-xs flex items-center justify-between sticky left-0 z-30 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)]">
             <span>แพทย์ประจำบ้าน & ข้อมูลวิจัย</span>
           </div>
           <div style="grid-column: span 6;" class="p-1.5 text-center bg-navy-50/70 border-r border-b border-navy-100 font-bold text-navy-900 text-xs">
@@ -3384,7 +3543,7 @@ function initData() {
         `;
 
         let monthHeaderCols = `
-          <div class="p-2 bg-slate-50 border-r border-b border-slate-200 font-semibold text-slate-500 text-[11px] flex items-center justify-between">
+          <div class="p-2 bg-slate-50 border-r border-b border-slate-200 font-semibold text-slate-500 text-[11px] flex items-center justify-between sticky left-0 z-30 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)]">
             <span>รายชื่อ / สาขา / ที่ปรึกษา</span>
             <span class="text-[10px] font-mono tabular-nums">ความคืบหน้า</span>
           </div>
@@ -3437,7 +3596,7 @@ function initData() {
 
             // Left info cell (260px)
             let residentInfoHtml = `
-              <div class="p-2.5 border-r border-b border-slate-200 flex flex-col justify-between bg-white space-y-1.5">
+              <div class="p-2.5 border-r border-b border-slate-200 flex flex-col justify-between bg-white space-y-1.5 sticky left-0 z-20 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)]">
                 <div class="flex items-start justify-between gap-1">
                   <div class="truncate pr-1">
                     <h4 onclick="jumpToResidentPortal('${res.id}')" class="font-heading font-bold text-navy-900 text-xs hover:text-navy-700 cursor-pointer truncate" title="${res.name}">
@@ -3520,7 +3679,7 @@ function initData() {
         });
 
         container.innerHTML = `
-          <div class="gantt-grid bg-white rounded-lg overflow-hidden border border-slate-200 shadow-xs">
+          <div class="gantt-grid bg-white rounded-lg border border-slate-200 shadow-xs">
             ${topSemesterRow}
             ${monthHeaderCols}
             ${rowsHtml}
@@ -3529,7 +3688,7 @@ function initData() {
       } else {
         // 36-Month Full Curriculum View (Continuous Gantt Bars with Full Thai Labels)
         let topHeaderCols = `
-          <div class="p-2.5 bg-slate-100 border-r border-b border-slate-200 font-bold text-slate-700 text-xs flex items-center justify-between">
+          <div class="p-2.5 bg-slate-100 border-r border-b border-slate-200 font-bold text-slate-700 text-xs flex items-center justify-between sticky left-0 z-30 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)]">
             <span>แพทย์ประจำบ้าน & ข้อมูลวิจัย</span>
             <span class="text-[10px] font-mono text-slate-500 font-normal">ตลอดหลักสูตร 36 เดือน</span>
           </div>
@@ -3545,7 +3704,7 @@ function initData() {
         `;
 
         let monthHeaderCols = `
-          <div class="p-2 bg-slate-50 border-r border-b border-slate-200 font-semibold text-slate-500 text-[11px] flex items-center justify-between">
+          <div class="p-2 bg-slate-50 border-r border-b border-slate-200 font-semibold text-slate-500 text-[11px] flex items-center justify-between sticky left-0 z-30 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)]">
             <span>รายชื่อ / สาขา / ที่ปรึกษา</span>
             <span class="text-[10px] font-mono tabular-nums">ความคืบหน้า</span>
           </div>
@@ -3590,9 +3749,9 @@ function initData() {
             const status = computeResidentStatus(res);
             const milestones = getResidentMilestones(res);
 
-            // Left info cell (260px)
+            // Left info cell (260px) - Sticky Frozen Column
             let residentInfoHtml = `
-              <div class="p-2.5 border-r border-b border-slate-200 flex flex-col justify-between bg-white space-y-1.5">
+              <div class="p-2.5 border-r border-b border-slate-200 flex flex-col justify-between bg-white space-y-1.5 sticky left-0 z-20 shadow-[2px_0_6px_-2px_rgba(0,0,0,0.08)]">
                 <div class="flex items-start justify-between gap-1">
                   <div onclick="jumpToResidentPortal('${res.id}')" class="font-bold text-navy-900 truncate cursor-pointer hover:text-navy-700 text-xs" title="${res.name}">
                     ${res.name}
@@ -3702,12 +3861,18 @@ function initData() {
         });
 
         container.innerHTML = `
-          <div class="gantt-grid-36 bg-white rounded-lg overflow-hidden border border-slate-200 shadow-xs">
+          <div class="gantt-grid-36 bg-white rounded-lg border border-slate-200 shadow-xs">
             ${topHeaderCols}
             ${monthHeaderCols}
             ${rowsHtml}
           </div>
         `;
+      }
+
+      // Auto-initialize drag-to-scroll on the viewport
+      const vp = container.parentElement;
+      if (vp && vp.classList.contains('overflow-x-auto') && vp.id) {
+        initDragToScroll(vp.id);
       }
     }
 
